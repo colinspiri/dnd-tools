@@ -1,0 +1,5 @@
+TODO
+
+-add .git and put on github
+-add taking damage as function in turn order
+-add monsters with pre determined attacks to call "attack crossbow" or "attack claws"
