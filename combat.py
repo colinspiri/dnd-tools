@@ -35,6 +35,7 @@ while True:
     command_next = "next"
     command_remove = "remove"
     command_end = "end"
+    command_attack = "attack"
 
     # Resolve commands
     if (command_roll + " ") in text:
@@ -54,3 +55,7 @@ while True:
     elif text == command_end:
         print("Program ended.")
         break
+    elif (command_attack + " ") in text:
+        if callable(getattr(order[turn], "attack", None)):
+            attack_name = text[text.find(command_attack + " ") + len(command_attack + " "):]
+            order[turn].attack(attack_name)

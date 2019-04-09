@@ -1,5 +1,6 @@
 from creature import Creature
 from wolf import Wolf
+from zombie import Zombie
 
 def input_initiative():
     creature_order = []
@@ -11,10 +12,13 @@ def input_initiative():
         if text == "":
             break
         words = text.split()
-        if words[0].lower() == "wolf":
+        name = words[0].lower()
+        if name == "wolf":
             new_creature = Wolf()
+        elif name == "zombie":
+            new_creature = Zombie()
         else:
-            new_creature = Creature(words[0])
+            new_creature = Creature(name.capitalize())
         new_creature.set_initiative(int(words[1]))
         creature_order.append(new_creature)
 

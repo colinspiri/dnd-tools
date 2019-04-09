@@ -1,5 +1,8 @@
 TODO
 
 current commit:
--add dice amounts to damage command
--add monsters with pre determined attacks to call "attack crossbow" or "attack claws" and targets (other creatures in initiative)
+-add monsters with pre determined attacks to call "attack crossbow" or "attack claws"
+
+-add PC as subclass of Creature and actual PCs (Hugo, Merkin, Masticator) as subclasses of PC with correct HP/AC values
+-add targets (other creatures in initiative) to monster attacks
+-make roll() methods call out when it's a natural 20
