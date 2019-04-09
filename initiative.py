@@ -1,39 +1,57 @@
+from creature import Creature
+from wolf import Wolf
 
 def input_initiative():
-    order = []
+    creature_order = []
 
-    # Store input into order
+    # Store input into order of creatures
+    print("Enter initiative in form \"NAME INITIATIVE\".")
     while True:
         text = input("> ").strip()
         if text == "":
             break
         words = text.split()
-        order.append({
-            "name": words[0],
-            "initiative": int(words[1])
-        })
+        if words[0].lower() == "wolf":
+            new_creature = Wolf()
+        else:
+            new_creature = Creature(words[0])
+        new_creature.set_initiative(int(words[1]))
+        creature_order.append(new_creature)
 
-    # Sort order by initiative count
-    def getInitiative(elem):
-        return elem["initiative"]
-    order.sort(key = getInitiative, reverse = True)
-    return order
+    # Sort creature order by initiative count
+    def get_creature_initiative(creature):
+        return creature.initiative
+    creature_order.sort(key = get_creature_initiative, reverse = True)
+    return creature_order
 
-def show_initiative(order):
+def show_initiative(creature_order):
     print()
     print("Initiative Order: ")
-    for turn in order:
-        print(turn["name"] + " (" + str(turn["initiative"]) + ")")
+    for creature in creature_order:
+        print(creature.name + " (" + str(creature.initiative) + ")")
     print()
+
+def next_round(turn, rounds):
+    turn = 0
+    rounds += 1
+    print()
+    print("ROUND " + str(rounds + 1) + ":")
+
 
 if __name__ == "__main__":
     order = input_initiative()
     show_initiative(order)
-    
+
     # Cycle through order
-    current_turn = 0
+    rounds = 0
+    turn = 0
+    print("ROUND 1:")
     while True:
-        print(order[current_turn]["name"] + " (" + str(order[current_turn]["initiative"]) + ") is up." )
+        print(order[turn].name + " (" + str(order[turn].initiative) + ") is up." )
         text = input("Next? ").strip()
-        current_turn += 1
-        current_turn %= len(order)
+        turn += 1
+        if turn >= len(order):
+            turn = 0
+            rounds += 1
+            print()
+            print("ROUND " + str(rounds + 1) + ":")

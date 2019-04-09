@@ -6,19 +6,49 @@ order = init.input_initiative()
 init.show_initiative(order)
 
 # Cycle through order
-current_turn = 0
+rounds = 0
+turn = 0
+print("ROUND 1:")
 while True:
-    print(order[current_turn]["name"] + " (" + str(order[current_turn]["initiative"]) + ") is up." )
+    # Remove dead creatures
+    if order[turn].dead:
+        print(order[turn].name + " died and was removed from initiative.")
+        del order[turn]
+        if len(order) == 0:
+            print("No creatures left in initiative. Program ended.")
+            break
+        if turn == len(order):
+            init.next_round(turn, rounds)
+            continue
 
+    # Print info about current creature
+    print(order[turn].name + " (" + str(order[turn].initiative) + ") is up." )
+    if hasattr(order[turn], 'max_health'):
+        print("Health: " + str(order[turn].get_current_health()) + "/" + str(order[turn].max_health))
+    elif order[turn].damage_taken > 0:
+        print(str(order[turn].damage_taken) + " damage taken.")
+
+    # Input commands
     text = input("> ").strip()
     command_roll = "roll"
-    command_next = "n"
+    command_damage = "damage"
+    command_next = "next"
+    command_remove = "remove"
+    command_end = "end"
+    
+    # Resolve commands
     if (command_roll + " ") in text:
-        dice.roll_from_input(text[text.find(command_roll + " ") + len(command_roll + " "):])
-    # elif "take " in text:
-        # take direct numbers as damage and add as element in order objects
-        # also be able to take dice amounts of damage
-        # eventually add monster classes with pre-determined attack rolls to call like "attack crossbow" or "attack claws" that roll to hit and for damage
-    elif command_next in text:
-        current_turn += 1
-        current_turn %= len(order)
+        dice.show_roll(text[text.find(command_roll + " ") + len(command_roll + " "):])
+    elif (command_damage + " ") in text:
+        damage_amount = int(text[text.find(command_damage + " ") + len(command_damage + " "):])
+        order[turn].take_damage(damage_amount)
+    elif text == command_remove:
+        order[turn].dead = True
+    elif text == command_next:
+        turn += 1
+        if turn >= len(order):
+            init.next_round(turn, rounds)
+            continue
+    elif text == command_end:
+        print("Program ended.")
+        break
