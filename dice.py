@@ -59,7 +59,7 @@ def show_roll(input_text):
     else:
         print(str(rolls) + " (+" + str(modifier) + ")")
     print("Result: " + str(result))
-    print()
+    return rolls, modifier, result
 
 if __name__ == "__main__":
     while True:

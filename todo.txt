@@ -1,9 +1,5 @@
 TODO
 
 current commit:
--change dice.py methods to have one that displays everything and one that just returns the value (first calls the second ?)
--kill/remove command to remove creature from initiative order
--npc and wolf classes
-
--add monsters with pre determined attacks to call "attack crossbow" or "attack claws"
 -add dice amounts to damage command
+-add monsters with pre determined attacks to call "attack crossbow" or "attack claws" and targets (other creatures in initiative)

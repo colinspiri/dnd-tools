@@ -35,7 +35,8 @@ def next_round(turn, rounds):
     turn = 0
     rounds += 1
     print()
-    print("ROUND " + str(rounds + 1) + ":")
+    print("ROUND " + str(rounds) + ":")
+    return turn, rounds
 
 
 if __name__ == "__main__":
