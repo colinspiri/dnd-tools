@@ -1,7 +1,13 @@
 import random
 
 def random_int(die_type):
-    return random.randint(1, die_type)
+    result = random.randint(1, die_type)
+    if die_type == 20:
+        if result == 20:
+            print("~~~~NATURAL 20!!~~~~")
+        elif result == 1:
+            print("~~~~NATURAL 1...~~~~")
+    return result
 
 def roll(text):
     # Rolling specified dice
@@ -20,8 +26,16 @@ def roll(text):
             modifier = 0
 
         # Roll dice and calculate result
-        count = int(dice_text[:dice_text.find("d")])
-        die_type = int(dice_text[dice_text.find("d") + 1:])
+        count_text = dice_text[:dice_text.find("d")]
+        if not count_text.isdigit():
+            count = 1
+        else:
+            count = int(count_text)
+        die_type_text = dice_text[dice_text.find("d") + 1:]
+        if die_type_text == "%":
+            die_type = 100
+        else:
+            die_type = int(die_type_text)
         rolls = []
         for i in range(count):
             rolls.append(random_int(die_type))
