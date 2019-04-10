@@ -2,6 +2,10 @@ from creature import Creature
 from npcs.wolf import Wolf
 from npcs.zombie import Zombie
 from npcs.werewolf import Werewolf
+from npcs.druid import Druid
+from npcs.vampirespawn import VampireSpawn
+from npcs.nighthag import NightHag
+from npcs.strahd import Strahd
 
 def input_initiative():
     creature_order = []
@@ -20,6 +24,14 @@ def input_initiative():
             new_creature = Zombie()
         elif name == "werewolf":
             new_creature = Werewolf()
+        elif name == "druid":
+            new_creature = Druid()
+        elif name == "vampirespawn":
+            new_creature = VampireSpawn()
+        elif name == "nighthag":
+            new_creature = NightHag()
+        elif name == "strahd":
+            new_creature = Strahd()
         else:
             new_creature = Creature(name.capitalize())
         new_creature.set_initiative(int(words[1]))

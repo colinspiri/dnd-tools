@@ -1,14 +1,20 @@
 TODO
 
 current commit:
--add Undead Fortitude ability to Zombie
--add save() and show_save() to dice.py
--add saving throw proficiencies to NPCs and save command 'save STR 15' as 'save ABILITY DC'
+-add more relevant CoS NPCs
+-add additions of dice to roll()
 
 todo later:
 -add PC as subclass of Creature and actual PCs (Hugo, Merkin, Masticator) as subclasses of PC with correct HP/AC values
 -add targets (other creatures in initiative) to monster attacks
--add more relevant CoS NPCs
 -make character_sheet_editor.py to generate, edit, and view character sheets (.txt files)
 -make commands.py to store different commands (for use from import in other modules, not just combat.py)
 -give damage types (and add resistances, immunities, vulnerabilities, and special effects - like Zombie's Undead Fortitude's interaction with radiant damage)
+-add spellcasting
+-add rules lookup
+-commands to list possible actions for current creature (multiattack)
+-automatically add npcs to code
+-command to heal hit points (reduce damage taken)
+-end initiative when only 1 creature remains (not for testing)
+-use better way of showing results of roll (pass boolean into function)
+-add skill checks (in same way as saving throws)

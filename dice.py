@@ -11,11 +11,17 @@ def roll(text):
         if "+" in text:
             dice_text = text[:text.find("+")].strip()
             modifier_text = text[text.find("+") + 1:].strip()
-            modifier = int(modifier_text[modifier_text.find("+") + 1:])
+            if "d" in modifier_text:
+                modifier = roll(modifier_text)[2]
+            else:
+                modifier = int(modifier_text[modifier_text.find("+") + 1:])
         elif "-" in text:
             dice_text = text[:text.find("-")].strip()
             modifier_text = text[text.find("-") + 1:].strip()
-            modifier = -int(modifier_text[modifier_text.find("-") + 1:])
+            if "d" in modifier_text:
+                modifier = roll(modifier_text)[2]
+            else:
+                modifier = -int(modifier_text[modifier_text.find("-") + 1:])
         else:
             dice_text = text
             modifier = 0
@@ -85,11 +91,12 @@ def show_attack(to_hit_modifier, damage_dice):
     to_hit_result, damage_result, critical = attack(to_hit_modifier, damage_dice)
 
     print("To Hit: " + str(to_hit_result))
-    if critical == True:
-        print("CRITICAL HIT! DOUBLE DAMAGE INFLICTED.")
-    elif critical == False:
+    if critical == False:
         print("CRITICAL FAILURE! MISSED ENTIRELY.")
-    print("Damage: " + str(damage_result))
+    else:
+        if critical:
+            print("CRITICAL HIT! DOUBLE DAMAGE INFLICTED.")
+        print("Damage: " + str(damage_result))
     return to_hit_result, damage_result, critical
 
 def save(save_bonus, save_dc):
@@ -106,6 +113,6 @@ def show_save(save_bonus, save_dc):
 
 if __name__ == "__main__":
     while True:
+        print()
         text = input("> ")
-        elements = text.split()
-        show_save(elements[0], elements[1])
+        show_roll(text)

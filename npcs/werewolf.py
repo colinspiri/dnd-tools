@@ -18,7 +18,7 @@ class Werewolf(NPC):
         if "bite" in action_name:
             self.action_bite()
         elif "claw" in action_name:
-            self.action_claws()
+            self.action_claw()
         elif "spear" in action_name:
             if "two" in action_name or "2" in action_name or "strong" in action_name:
                 self.action_spear_strong()
@@ -29,21 +29,21 @@ class Werewolf(NPC):
     def action_bite(self):
         to_hit = "+4"
         damage = "1d8+2"
-        print(self.name + " attacks with " + to_hit + " to hit and " + damage + " piercing damage.")
+        print(self.name + " attacks with " + to_hit + " to hit for " + damage + " piercing damage.")
         dice.show_attack(to_hit, damage)
         print("If the target is a humanoid, it must succeed on a DC 12 CON saving throw or be cursed with werewolf lycanthropy.")
-    def action_claws(self):
+    def action_claw(self):
         to_hit = "+4"
         damage = "2d4+2"
-        print(self.name + " attacks with " + to_hit + " to hit and " + damage + " slashing damage.")
+        print(self.name + " attacks with " + to_hit + " to hit for " + damage + " slashing damage.")
         dice.show_attack(to_hit, damage)
     def action_spear_strong(self):
         to_hit = "+4"
         damage = "1d8+2"
-        print(self.name + " attacks with " + to_hit + " to hit and " + damage + " piercing damage. (two-handed)")
+        print(self.name + " attacks with " + to_hit + " to hit for " + damage + " piercing damage. (two-handed)")
         dice.show_attack(to_hit, damage)
     def action_spear_light(self):
         to_hit = "+4"
         damage = "1d6+2"
-        print(self.name + " attacks with " + to_hit + " to hit and " + damage + " piercing damage. (one-handed/ranged)")
+        print(self.name + " attacks with " + to_hit + " to hit for " + damage + " piercing damage. (one-handed/ranged)")
         dice.show_attack(to_hit, damage)

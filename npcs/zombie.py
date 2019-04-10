@@ -39,5 +39,5 @@ class Zombie(NPC):
     def action_slam(self):
         to_hit = "+3"
         damage = "1d6+1"
-        print(self.name + " attacks with " + to_hit + " to hit and " + damage + " bludgeoning damage.")
+        print(self.name + " attacks with " + to_hit + " to hit for " + damage + " bludgeoning damage.")
         dice.show_attack(to_hit, damage)

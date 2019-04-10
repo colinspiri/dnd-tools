@@ -22,6 +22,6 @@ class Wolf(NPC):
     def action_bite(self):
         to_hit = "+4"
         damage = "2d4+2"
-        print(self.name + " attacks with " + to_hit + " to hit and " + damage + " piercing damage.")
+        print(self.name + " attacks with " + to_hit + " to hit for " + damage + " piercing damage.")
         dice.show_attack(to_hit, damage)
         print("If the target is a creature, it must succeed on a DC 11 STR saving throw or be knocked prone.")
