@@ -40,13 +40,15 @@ def roll(text):
         return rolls, modifier, result
 
     # Rolling 1d20 and a modifier
-    elif "+" in text or "0" in text or "-" in text:
+    elif "+" in text or "0" in text or "-" in text or text.isdigit():
         # Get modifier and calculate result
         modifier = 0
         if "+" in text:
             modifier = int(text[text.find("+") + 1:])
         elif "-" in text:
             modifier = -int(text[text.find("-") + 1:])
+        elif text.isdigit():
+            modifier = int(text)
         die_result = random_int(20)
         result = die_result + modifier
 
@@ -54,7 +56,6 @@ def roll(text):
         return [die_result], modifier, result
     else:
         print("Cannot regonize input format. Please try again.")
-
 def show_roll(text):
     rolls, modifier, result = roll(text)
 
@@ -80,7 +81,6 @@ def attack(to_hit_modifier, damage_dice):
         critical = False
         damage_result = 0
     return to_hit_result, damage_result, critical
-
 def show_attack(to_hit_modifier, damage_dice):
     to_hit_result, damage_result, critical = attack(to_hit_modifier, damage_dice)
 
@@ -92,8 +92,20 @@ def show_attack(to_hit_modifier, damage_dice):
     print("Damage: " + str(damage_result))
     return to_hit_result, damage_result, critical
 
+def save(save_bonus, save_dc):
+    die_result, modifier, saving_throw = roll(save_bonus)
+    save_success = saving_throw >= int(save_dc)
+    return save_success, saving_throw
+def show_save(save_bonus, save_dc):
+    save_success, saving_throw = save(save_bonus, save_dc)
+    if save_success:
+        print("Save successful with " + str(saving_throw) + ".")
+    else:
+        print("Save failed with " + str(saving_throw) + ".")
+    return save_success, saving_throw
+
 if __name__ == "__main__":
     while True:
         text = input("> ")
         elements = text.split()
-        show_attack(elements[0], elements[1])
+        show_save(elements[0], elements[1])

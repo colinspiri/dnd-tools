@@ -12,7 +12,7 @@ class Werewolf(NPC):
         'INT': 10,
         'WIS': 11,
         'CHA': 10
-        })
+        }, {})
 
     def action(self, action_name):
         if "bite" in action_name:
@@ -26,7 +26,6 @@ class Werewolf(NPC):
                 self.action_spear_light()
         else:
             print("Action name not recognized.")
-
     def action_bite(self):
         to_hit = "+4"
         damage = "1d8+2"

@@ -6,12 +6,9 @@ order = init.input_initiative()
 init.show_initiative(order)
 
 # Cycle through order
-rounds = 1
-turn = 0
-print("ROUND 1:")
+turn, rounds = init.next_round(0, 0)
 while True:
-    if turn > 0:
-        print()
+    print()
 
     # Remove dead creatures
     if order[turn].dead:
@@ -35,11 +32,13 @@ while True:
     text = input("> ").strip()
     command_roll = "roll"
     command_roll_attack = "attack"
+    command_roll_save = "save"
     command_damage = "damage"
     command_next = "next"
     command_remove = "remove"
     command_end = "end"
     command_action = "action"
+    command_save = "save"
 
     # Resolve commands
     if (command_roll + " ") in text:
@@ -48,6 +47,10 @@ while True:
             elements = next_part.split()
             elements.remove(command_roll_attack)
             dice.show_attack(elements[0], elements[1])
+        elif command_roll_save in next_part:
+            elements = next_part.split()
+            elements.remove(command_roll_save)
+            dice.show_save(elements[0], elements[1])
         else:
             dice.show_roll(next_part)
         continue
@@ -75,3 +78,14 @@ while True:
         else:
             print(order[turn].name + " has no actions.")
         continue
+    elif (command_save + " ") in text:
+        if hasattr(order[turn], 'saving_throws'):
+            elements = text[text.find(command_save + " ") + len(command_save + " "):].split()
+            ability = elements[0].upper()
+            save_dc = elements[1]
+            print(ability, save_dc)
+            order[turn].save(ability, save_dc)
+        else:
+            print(order[turn].name + " has no saving throw stats to use.")
+    else:
+        print("Command not recognized.")

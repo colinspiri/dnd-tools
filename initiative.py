@@ -36,12 +36,11 @@ def show_initiative(creature_order):
     print("Initiative Order: ")
     for creature in creature_order:
         print(creature.name + " (" + str(creature.initiative) + ")")
-    print()
 
 def next_round(turn, rounds):
     turn = 0
     rounds += 1
-    print()
+    print("\n\n\n")
     print("ROUND " + str(rounds) + ":")
     return turn, rounds
 

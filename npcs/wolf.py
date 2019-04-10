@@ -12,14 +12,13 @@ class Wolf(NPC):
         'INT': 3,
         'WIS': 12,
         'CHA': 6
-        })
+        }, {})
 
     def action(self, action_name):
         if "bite" in action_name:
             self.action_bite()
         else:
             print("Action name not recognized.")
-
     def action_bite(self):
         to_hit = "+4"
         damage = "2d4+2"
