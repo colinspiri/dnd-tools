@@ -1,8 +1,15 @@
 TODO
 
 current commit:
--make roll() methods call out when it's a natural 20
--more dice parsing (1d6=d6, d%=d100)
+-added Werewolf
+-add attack() method to roll to-hit and damage (taking into account critical hits)
 
 -add PC as subclass of Creature and actual PCs (Hugo, Merkin, Masticator) as subclasses of PC with correct HP/AC values
 -add targets (other creatures in initiative) to monster attacks
+-add more relevant CoS NPCs
+
+Zombie:
+def take_damage(self, damage):
+    self.damage_taken += damage
+    self.current_health -= damage
+    if self.current_health <= 0

@@ -10,8 +10,10 @@ class Creature:
 
     def take_damage(self, damage):
         self.damage_taken += damage
-        if hasattr(self, 'max_health') and self.get_current_health() <= 0:
-            self.dead = True
+        if hasattr(self, 'current_health'):
+            self.current_health -= damage
+            if self.current_health <= 0:
+                self.dead = True
 
     def __str__(self):
         return self.name + " has taken " + str(self.damage_taken) + " damage."

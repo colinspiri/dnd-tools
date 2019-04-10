@@ -1,6 +1,7 @@
 from creature import Creature
-from wolf import Wolf
-from zombie import Zombie
+from npcs.wolf import Wolf
+from npcs.zombie import Zombie
+from npcs.werewolf import Werewolf
 
 def input_initiative():
     creature_order = []
@@ -17,6 +18,8 @@ def input_initiative():
             new_creature = Wolf()
         elif name == "zombie":
             new_creature = Zombie()
+        elif name == "werewolf":
+            new_creature = Werewolf()
         else:
             new_creature = Creature(name.capitalize())
         new_creature.set_initiative(int(words[1]))

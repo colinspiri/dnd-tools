@@ -2,11 +2,6 @@ import random
 
 def random_int(die_type):
     result = random.randint(1, die_type)
-    if die_type == 20:
-        if result == 20:
-            print("~~~~NATURAL 20!!~~~~")
-        elif result == 1:
-            print("~~~~NATURAL 1...~~~~")
     return result
 
 def roll(text):
@@ -60,12 +55,7 @@ def roll(text):
     else:
         print("Cannot regonize input format. Please try again.")
 
-def show_roll(input_text):
-    if input_text == None or input_text == "":
-        text = input("> ")
-    else:
-        text = input_text
-
+def show_roll(text):
     rolls, modifier, result = roll(text)
 
     if modifier < 0:
@@ -75,7 +65,35 @@ def show_roll(input_text):
     print("Result: " + str(result))
     return rolls, modifier, result
 
+def attack(to_hit_modifier, damage_dice):
+    to_hit_tuple = roll(to_hit_modifier)
+    to_hit_result = to_hit_tuple[2]
+    # Critical hit on 20
+    damage_tuple = roll(damage_dice)
+    damage_result = damage_tuple[2]
+    critical = None # None = normal, True = critical hit, False = critical failure
+    natural_roll = sum(to_hit_tuple[0])
+    if natural_roll == 20:
+        damage_result += roll(damage_dice)[2]
+        critical = True
+    elif natural_roll == 1:
+        critical = False
+        damage_result = 0
+    return to_hit_result, damage_result, critical
+
+def show_attack(to_hit_modifier, damage_dice):
+    to_hit_result, damage_result, critical = attack(to_hit_modifier, damage_dice)
+
+    print("To Hit: " + str(to_hit_result))
+    if critical == True:
+        print("CRITICAL HIT! DOUBLE DAMAGE INFLICTED.")
+    elif critical == False:
+        print("CRITICAL FAILURE! MISSED ENTIRELY.")
+    print("Damage: " + str(damage_result))
+    return to_hit_result, damage_result, critical
+
 if __name__ == "__main__":
     while True:
         text = input("> ")
-        show_roll(text)
+        elements = text.split()
+        show_attack(elements[0], elements[1])
