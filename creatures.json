@@ -1,0 +1,58 @@
+{
+  "druid": {
+    "hit_dice": "5d8+5",
+    "max_health": 27,
+    "armor_class": 11,
+    "ability_scores": {
+      "STR": 10,
+      "DEX": 12,
+      "CON": 13,
+      "INT": 12,
+      "WIS": 15,
+      "CHA": 11
+    },
+    "actions": {
+      "quarterstaff": {
+        "to_hit": "+2",
+        "damage": [
+          {
+            "damage_dice": "1d6",
+            "damage_type": "bludgeoning"
+          }
+        ]
+      }
+    }
+  },
+  "wolf": {
+    "hit_dice": "2d8+2",
+    "max_health": 11,
+    "armor_class": 13,
+    "ability_scores": {
+      "STR": 12,
+      "DEX": 15,
+      "CON": 12,
+      "INT": 3,
+      "WIS": 12,
+      "CHA": 6
+    },
+    "actions": {
+      "bite": {
+        "to_hit": "+4",
+        "damage": [
+          {
+            "damage_dice": "2d4+2",
+            "damage_type": "piercing"
+          }
+        ],
+        "effects": {
+          "before_hit": [
+            "The wolf has advantage on an attack roll against a creature if at least one of the wolf's allies is within 5 ft. of the creature and the ally isn't incapacitated."
+          ],
+          "on_hit": [
+            "If the target is a creature, it must succeed on a DC 11 STR saving throw or be knocked prone."
+          ]
+        }
+      }
+    }
+  }
+}

@@ -1,8 +1,7 @@
 TODO
 
-current commit:
--add more relevant CoS NPCs
--add additions of dice to roll()
+todo current commit:
+-add JSON loader and creatures.json to test
 
 todo later:
 -add PC as subclass of Creature and actual PCs (Hugo, Merkin, Masticator) as subclasses of PC with correct HP/AC values
