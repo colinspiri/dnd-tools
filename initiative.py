@@ -1,11 +1,6 @@
 from creature import Creature
-from npcs.wolf import Wolf
-from npcs.zombie import Zombie
-from npcs.werewolf import Werewolf
-from npcs.druid import Druid
-from npcs.vampirespawn import VampireSpawn
-from npcs.nighthag import NightHag
-from npcs.strahd import Strahd
+from npc import NPC
+import jsonloader as loader
 
 def input_initiative():
     creature_order = []
@@ -18,21 +13,10 @@ def input_initiative():
             break
         words = text.split()
         name = words[0].lower()
-        if name == "wolf":
-            new_creature = Wolf()
-        elif name == "zombie":
-            new_creature = Zombie()
-        elif name == "werewolf":
-            new_creature = Werewolf()
-        elif name == "druid":
-            new_creature = Druid()
-        elif name == "vampirespawn":
-            new_creature = VampireSpawn()
-        elif name == "nighthag":
-            new_creature = NightHag()
-        elif name == "strahd":
-            new_creature = Strahd()
-        else:
+        # If name is found in JSON file, use it; otherwise, make a Creature object
+        try:
+            new_creature = NPC(loader.get_creature(name))
+        except:
             new_creature = Creature(name.capitalize())
         new_creature.set_initiative(int(words[1]))
         creature_order.append(new_creature)

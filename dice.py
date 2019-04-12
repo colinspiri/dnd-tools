@@ -87,7 +87,7 @@ def attack(to_hit_modifier, damage_dice):
         critical = False
         damage_result = 0
     return to_hit_result, damage_result, critical
-def show_attack(to_hit_modifier, damage_dice):
+def show_attack(to_hit_modifier, damage_dice, damage_type = ""):
     to_hit_result, damage_result, critical = attack(to_hit_modifier, damage_dice)
 
     print("To Hit: " + str(to_hit_result))
@@ -96,7 +96,7 @@ def show_attack(to_hit_modifier, damage_dice):
     else:
         if critical:
             print("CRITICAL HIT! DOUBLE DAMAGE INFLICTED.")
-        print("Damage: " + str(damage_result))
+        print("Damage: " + str(damage_result) + " (" + damage_type + ")")
     return to_hit_result, damage_result, critical
 
 def save(save_bonus, save_dc):

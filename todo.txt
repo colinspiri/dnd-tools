@@ -1,7 +1,7 @@
 TODO
 
 todo current commit:
--add JSON loader and creatures.json to test
+-add JSON loader and creatures.json
 
 todo later:
 -add PC as subclass of Creature and actual PCs (Hugo, Merkin, Masticator) as subclasses of PC with correct HP/AC values

@@ -23,10 +23,11 @@ while True:
 
     # Print info about current creature
     print(order[turn].name + " (" + str(order[turn].initiative) + ") is up." )
-    if hasattr(order[turn], 'max_health'):
-        print("Health: " + str(order[turn].current_health) + "/" + str(order[turn].max_health))
-    elif order[turn].damage_taken > 0:
+    if order[turn].damage_taken > 0:
         print(str(order[turn].damage_taken) + " damage taken.")
+    if hasattr(order[turn], "max_health"):
+        print("Health: " + str(order[turn].current_health) + "/" + str(order[turn].max_health))
+
 
     # Input commands
     text = input("> ").strip()
@@ -72,7 +73,7 @@ while True:
         print("Program ended.")
         break
     elif (command_action + " ") in text:
-        if callable(getattr(order[turn], "action", None)):
+        if len(order[turn].actions) > 0:
             action_name = text[text.find(command_action + " ") + len(command_action + " "):]
             order[turn].action(action_name)
         else:

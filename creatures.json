@@ -1,7 +1,8 @@
 {
   "druid": {
-    "hit_dice": "5d8+5",
-    "max_health": 27,
+    "name": "Druid",
+    "max_health": "5d8+5",
+    "max_health_average": 27,
     "armor_class": 11,
     "ability_scores": {
       "STR": 10,
@@ -11,6 +12,8 @@
       "WIS": 15,
       "CHA": 11
     },
+    "saving_throws": {
+    },
     "actions": {
       "quarterstaff": {
         "to_hit": "+2",
@@ -19,13 +22,16 @@
             "damage_dice": "1d6",
             "damage_type": "bludgeoning"
           }
+        ],
+        "effects": [
         ]
       }
     }
   },
   "wolf": {
-    "hit_dice": "2d8+2",
-    "max_health": 11,
+    "name": "Wolf",
+    "max_health": "2d8+2",
+    "max_health_average": 11,
     "armor_class": 13,
     "ability_scores": {
       "STR": 12,
@@ -34,6 +40,8 @@
       "INT": 3,
       "WIS": 12,
       "CHA": 6
+    },
+    "saving_throws": {
     },
     "actions": {
       "bite": {
@@ -44,14 +52,207 @@
             "damage_type": "piercing"
           }
         ],
-        "effects": {
-          "before_hit": [
-            "The wolf has advantage on an attack roll against a creature if at least one of the wolf's allies is within 5 ft. of the creature and the ally isn't incapacitated."
-          ],
-          "on_hit": [
-            "If the target is a creature, it must succeed on a DC 11 STR saving throw or be knocked prone."
-          ]
-        }
+        "effects": [
+          "If the target is a creature, it must succeed on a DC 11 STR saving throw or be knocked prone."
+        ]
+      }
+    }
+  },
+  "zombie": {
+    "name": "Zombie",
+    "max_health": "3d8+9",
+    "max_health_average": 22,
+    "armor_class": 8,
+    "ability_scores": {
+      "STR": 13,
+      "DEX": 6,
+      "CON": 16,
+      "INT": 3,
+      "WIS": 6,
+      "CHA": 5
+    },
+    "saving_throws": {
+      "WIS": 0
+    },
+    "actions": {
+      "slam": {
+        "to_hit": "+3",
+        "damage": [
+          {
+            "damage_dice": "1d6+1",
+            "damage_type": "bludgeoning"
+          }
+        ],
+        "effects": [
+        ]
+      }
+    }
+  },
+  "werewolf": {
+    "commands": ["werew"],
+    "name": "Werewolf",
+    "max_health": "9d8+18",
+    "max_health_average": 58,
+    "armor_class": 12,
+    "ability_scores": {
+      "STR": 15,
+      "DEX": 13,
+      "CON": 14,
+      "INT": 10,
+      "WIS": 11,
+      "CHA": 10
+    },
+    "saving_throws": {
+    },
+    "actions": {
+      "bite": {
+        "to_hit": "+4",
+        "damage": [
+          {
+            "damage_dice": "1d8+2",
+            "damage_type": "piercing"
+          }
+        ],
+        "effects": [
+          "If the target is a humanoid, it must succeed on a DC 12 CON saving throw or be cursed with werewolf lycanthropy."
+        ]
+      },
+      "claw": {
+        "to_hit": "+4",
+        "damage": [
+          {
+            "damage_dice": "2d4+2",
+            "damage_type": "slashing"
+          }
+        ],
+        "effects": [
+        ]
+      },
+      "spear_strong": {
+        "to_hit": "+4",
+        "damage": [
+          {
+            "damage_dice": "1d8+2",
+            "damage_type": "piercing"
+          }
+        ],
+        "effects": [
+        ]
+      },
+      "spear_light": {
+        "to_hit": "+4",
+        "damage": [
+          {
+            "damage_dice": "1d6+2",
+            "damage_type": "piercing"
+          }
+        ],
+        "effects": [
+        ]
+      }
+    }
+  },
+  "vampire_spawn": {
+    "commands": ["vampspawn", "vamps", "vampire spawn"],
+    "name": "Vampire Spawn",
+    "max_health": "11d8+33",
+    "max_health_average": 82,
+    "armor_class": 15,
+    "ability_scores": {
+      "STR": 16,
+      "DEX": 16,
+      "CON": 16,
+      "INT": 11,
+      "WIS": 10,
+      "CHA": 12
+    },
+    "saving_throws": {
+      "DEX": 6,
+      "WIS": 3
+    },
+    "actions": {
+      "bite": {
+        "to_hit": "+6",
+        "damage": [
+          {
+            "damage_dice": "1d6+3",
+            "damage_type": "piercing"
+          },
+          {
+            "damage_dice": "2d6",
+            "damage_type": "necrotic"
+          }
+        ],
+        "effects": [
+          "Bite can only affect one willing creature, or a creature that is grappled by the vampire, incapacitated, or restrained.",
+          "The target's hit point maximum is reduced by an amount equal to the necrotic damage taken, and the vampire regains hit points equal to that amount. The reduction lasts until the target finishes a long rest. The target dies if this effect reduces its hit point maximum to 0."
+        ]
+      },
+      "claw": {
+        "to_hit": "+6",
+        "damage": [
+          {
+            "damage_dice": "2d4+3",
+            "damage_type": "slashing"
+          }
+        ],
+        "effects": [
+          "Instead of dealing damage, the vampire can grapple the target (escape DC 13)."
+        ]
+      }
+    }
+  },
+  "strahd": {
+    "name": "Strahd von Zarovich",
+    "max_health": "17d8+68",
+    "max_health_average": 144,
+    "armor_class": 16,
+    "ability_scores": {
+      "STR": 18,
+      "DEX": 18,
+      "CON": 18,
+      "INT": 20,
+      "WIS": 15,
+      "CHA": 18
+    },
+    "saving_throws": {
+      "DEX": 9,
+      "WIS": 7,
+      "CHA": 9
+    },
+    "actions": {
+      "bite": {
+        "to_hit": "+9",
+        "damage": [
+          {
+            "damage_dice": "1d6+4",
+            "damage_type": "piercing"
+          },
+          {
+            "damage_dice": "3d6",
+            "damage_type": "necrotic"
+          }
+        ],
+        "effects": [
+          "Bite can only affect one willing creature, or a creature that is grappled by the vampire, incapacitated, or restrained.",
+          "The target's hit point maximum is reduced by an amount equal to the necrotic damage taken, and Strahd regains hit points equal to that amount. The reduction lasts until the target finishes a long rest. The target dies if its hit point maximum is reduced to 0. A humanoid slain in this way and then buried in the ground rises the following night as a vampire spawn under Strahd’s control"
+        ]
+      },
+      "unarmed": {
+        "to_hit": "+9",
+        "damage": [
+          {
+            "damage_dice": "1d8+4",
+            "damage_type": "bludgeoning"
+          },
+          {
+            "damage_dice": "4d6",
+            "damage_type": "necrotic"
+          }
+        ],
+        "effects": [
+          "Instead of dealing the bludgeoning damage, Strahd can grapple the target (escape DC 18)."
+        ]
       }
     }
   }
