@@ -24,6 +24,8 @@ class NPC(Creature):
 
         self.actions = object["actions"]
 
+    def show_actions(self):
+        print(self.name + " has actions " + str(list(self.actions.keys())))
     def action(self, requested_action):
         for action_name, action in self.actions.items():
             # Check actual action name
