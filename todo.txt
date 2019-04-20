@@ -1,19 +1,16 @@
 TODO
 
 todo current commit:
--make parser.py to store different commands (for use from import in other modules, not just combat.py)
--make initiative a class/object to pass to things
+-make help command able to give specific info about a certain command (use dict to associate command name with command description)
 
 todo later:
--make help command able to give specific info about a certain command (use dict to associate command name with command description)
+-add passive abilities to print
 -make actions able to execute commands to roll things?
 -add PC as subclass of Creature and actual PCs (Hugo, Merkin, Masticator) as subclasses of PC with correct HP/AC values stored in JSON
 -add targets (other creatures in initiative) to monster attacks
 -make character_sheet_editor.py to generate, edit, and view character sheets (.txt files)
--add resistances, immunities, vulnerabilities, and passives
+-add resistances, immunities, vulnerabilities
 -add spellcasting and spell lookup
 -add rules lookup
--commands to list possible actions for current creature (multiattack)
 -command to heal hit points (reduce damage taken)
--use better way of showing results of roll (pass boolean into function)
 -add skill checks (in same way as saving throws)

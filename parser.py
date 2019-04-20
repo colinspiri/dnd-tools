@@ -1,14 +1,19 @@
 import initiative as init
 import dice
+import jsonloader as loader
 
 def get_input(initiative):
-    text_elements = input("> ").strip().split()
-    if len(text_elements) == 0:
+    text = input("> ").strip()
+    if len(text) == 0:
         print("Invalid input. Try again, but with words this time.")
     else:
-        command = text_elements[0]
-        text_elements.remove(command)
-        run_command(initiative, command, text_elements)
+        process_input(initiative, text)
+
+def process_input(initiative, text):
+    text_elements = text.strip().split()
+    command = text_elements[0]
+    text_elements.remove(command)
+    run_command(initiative, command, text_elements)
 
 def run_command(initiative, command, components):
     # Next
@@ -80,8 +85,12 @@ def run_command(initiative, command, components):
 
     # Help
     elif command == "help":
-        commands = ["help", "next", "end", "roll", "damage", "remove", "action", "save"]
-        print("Here's a list of available commands: " + str(commands))
+        if len(components) == 0:
+            commands = loader.get_command_names()
+            print("Here's a list of available commands: " + str(commands))
+        else:
+            print(loader.get_command_description(components[0]))
 
+    # Command not recognized.
     else:
         print("Command not recognized. Type \'help\' for a list of available commands.")

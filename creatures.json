@@ -258,5 +258,75 @@
         ]
       }
     }
+  },
+  "troglodyte": {
+    "commands": ["trog", "tgdyte"],
+    "name": "Troglodyte",
+    "max_health": "2d8+4",
+    "max_health_average": 13,
+    "armor_class": 11,
+    "ability_scores": {
+      "STR": 14,
+      "DEX": 10,
+      "CON": 14,
+      "INT": 6,
+      "WIS": 10,
+      "CHA": 6
+    },
+    "saving_throws": {
+    },
+    "actions": {
+      "bite": {
+        "to_hit": "+4",
+        "damage": [
+          {
+            "damage_dice": "1d4+2",
+            "damage_type": "piercing"
+          }
+        ],
+        "effects": [
+        ]
+      },
+      "claw": {
+        "to_hit": "+4",
+        "damage": [
+          {
+            "damage_dice": "1d4+2",
+            "damage_type": "slashing"
+          }
+        ],
+        "effects": [
+        ]
+      }
+    }
+  },
+  "cultist": {
+    "name": "Cultist",
+    "max_health": "2d8",
+    "max_health_average": 9,
+    "armor_class": 12,
+    "ability_scores": {
+      "STR": 11,
+      "DEX": 12,
+      "CON": 10,
+      "INT": 10,
+      "WIS": 11,
+      "CHA": 10
+    },
+    "saving_throws": {
+    },
+    "actions": {
+      "scimitar": {
+        "to_hit": "+3",
+        "damage": [
+          {
+            "damage_dice": "1d6+1",
+            "damage_type": "slashing"
+          }
+        ],
+        "effects": [
+        ]
+      }
+    }
   }
 }

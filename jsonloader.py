@@ -16,6 +16,21 @@ def get_creature(requested_creature):
             except:
                 pass
 
+def get_command_names():
+    with open("commands.json", "r") as file:
+        data = json.load(file)
+        command_names = []
+        for command_name in data:
+            command_names.append(command_name)
+        return command_names
+
+def get_command_description(requested_command):
+    with open("commands.json", "r") as file:
+        data = json.load(file)
+        for command_name, command_description in data.items():
+            if command_name == requested_command:
+                return command_description
+
 if __name__ == "__main__":
-    creature = get_creature("vampire spawn")
-    print(creature)
+    command = get_command_description("help")
+    print(command)
