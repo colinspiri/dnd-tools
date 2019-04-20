@@ -11,6 +11,5 @@ todo later:
 -make character_sheet_editor.py to generate, edit, and view character sheets (.txt files)
 -add resistances, immunities, vulnerabilities
 -add spellcasting and spell lookup
--add rules lookup
--command to heal hit points (reduce damage taken)
+-add rules lookup (scrape from roll20?)
 -add skill checks (in same way as saving throws)

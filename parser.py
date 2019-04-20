@@ -47,8 +47,18 @@ def run_command(initiative, command, components):
             return
         damage_amount = "".join(components)
         if not damage_amount.isdigit():
-            rolls, modifier, damage_amount = dice.show_roll(damage_amount)
+            _, _, damage_amount = dice.show_roll(damage_amount)
         initiative.damage_current_creature(int(damage_amount))
+
+    # Heal
+    elif command == "heal":
+        if len(components) == 0:
+            print("Invalid input. Heal command requires a parameter.")
+            return
+        heal_amount = "".join(components)
+        if not heal_amount.isdigit():
+            _, _, heal_amount = dice.show_roll(heal_amount)
+        initiative.damage_current_creature(-1*int(heal_amount))
 
     # Remove
     elif command == "remove":
