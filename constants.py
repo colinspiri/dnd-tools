@@ -22,3 +22,24 @@ ABILITY_MODIFIERS = {
 19: 4,
 20: 5,
 }
+
+SKILLS = {
+"athletics": "STR",
+"acrobatics": "DEX",
+"slight_of_hand": "DEX",
+"stealth": "DEX",
+"arcana": "INT",
+"history": "INT",
+"investigation": "INT",
+"nature": "INT",
+"religion": "INT",
+"animal_handling": "WIS",
+"insight": "WIS",
+"medicine": "WIS",
+"perception": "WIS",
+"survival": "WIS",
+"deception": "CHA",
+"intimidation": "CHA",
+"performance": "CHA",
+"persuasion": "CHA"
+}

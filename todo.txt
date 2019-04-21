@@ -1,12 +1,16 @@
 TODO
 
 todo current commit:
--make help command able to give specific info about a certain command (use dict to associate command name with command description)
+-add PC as subclass of Creature and actual PCs (Hugo, Merkin, Masticator) as subclasses of PC with correct HP/AC values stored in JSON
+-change creature.py into Entity class
+-Creatures have health and actions
+-PC and NPC are subclasses of Creature
 
 todo later:
+-add more weapon properties and functionality
+-roll initiative automatically for monsters based on dex scores
 -add passive abilities to print
 -make actions able to execute commands to roll things?
--add PC as subclass of Creature and actual PCs (Hugo, Merkin, Masticator) as subclasses of PC with correct HP/AC values stored in JSON
 -add targets (other creatures in initiative) to monster attacks
 -make character_sheet_editor.py to generate, edit, and view character sheets (.txt files)
 -add resistances, immunities, vulnerabilities

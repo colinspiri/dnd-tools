@@ -1,0 +1,54 @@
+{
+  "igor": {
+    "name": "Igor",
+    "proficiency_bonus": 2,
+    "max_health": 6,
+    "armor_class": 12,
+    "ability_scores": {
+      "STR": 8,
+      "DEX": 15,
+      "CON": 10,
+      "INT": 17,
+      "WIS": 13,
+      "CHA": 12
+    },
+    "saving_throws": {
+      "INT": 5,
+      "WIS": 3
+    },
+    "skill_proficiencies": {
+      "arcana": 1,
+      "history": 1,
+      "insight": 1,
+      "perception": 1
+    },
+    "weapon_proficiencies": ["dagger", "light_crossbow", "quarterstaff"],
+    "weapons": ["dagger", "light_crossbow", "dart", "quarterstaff"]
+  },
+  "cha_racter": {
+    "name": "Cha Racter",
+    "proficiency_bonus": 2,
+    "max_health": 28,
+    "armor_class": 15,
+    "ability_scores": {
+      "STR": 11,
+      "DEX": 16,
+      "CON": 11,
+      "INT": 14,
+      "WIS": 16,
+      "CHA": 10
+    },
+    "saving_throws": {
+      "STR": 2,
+      "DEX": 5
+    },
+    "skill_proficiencies": {
+      "arcana": 1,
+      "history": 1,
+      "insight": 1,
+      "perception": 1
+    },
+    "weapon_proficiencies": ["shortsword", "longbow"],
+    "weapons": ["shortsword", "longbow"]
+  }
+}

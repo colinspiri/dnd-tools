@@ -16,6 +16,19 @@ def get_creature(requested_creature):
             except:
                 pass
 
+def get_object(requested_object, file_name):
+    with open(file_name, "r") as file:
+        data = json.load(file)
+        for object_name, object in data.items():
+            if object_name == requested_object:
+                return object
+
+def get_pc(requested_pc):
+    return get_object(requested_pc, "playercharacters.json")
+
+def get_weapon(requested_weapon):
+    return get_object(requested_weapon, "weapons.json")
+
 def get_command_names():
     with open("commands.json", "r") as file:
         data = json.load(file)
@@ -23,13 +36,8 @@ def get_command_names():
         for command_name in data:
             command_names.append(command_name)
         return command_names
-
 def get_command_description(requested_command):
-    with open("commands.json", "r") as file:
-        data = json.load(file)
-        for command_name, command_description in data.items():
-            if command_name == requested_command:
-                return command_description
+    return get_object(requested_command, "commands.json")
 
 if __name__ == "__main__":
     command = get_command_description("help")
