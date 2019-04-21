@@ -1,13 +1,12 @@
 TODO
 
 todo current commit:
--add PC as subclass of Creature and actual PCs (Hugo, Merkin, Masticator) as subclasses of PC with correct HP/AC values stored in JSON
--change creature.py into Entity class
--Creatures have health and actions
--PC and NPC are subclasses of Creature
+-add more weapon properties and functionality
+-add range to actions
+-add reach property
+-add thrown property
 
 todo later:
--add more weapon properties and functionality
 -roll initiative automatically for monsters based on dex scores
 -add passive abilities to print
 -make actions able to execute commands to roll things?

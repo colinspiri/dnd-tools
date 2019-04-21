@@ -28,14 +28,24 @@ class PC(Creature):
             self.skills[skill] += proficiency * self.proficiency_bonus
         self.passive_perception = 10 + self.skills["perception"]
 
-        # Weapon proficiencies and actions
+        # Compiling actions from weapon proficiencies and weapon properties
         self.weapon_proficiencies = object["weapon_proficiencies"]
         self.weapons = object["weapons"]
         actions = {}
         for weapon in self.weapons:
             weapon_stats = loader.get_weapon(weapon)
-            # To hit
-            relevant_ability_bonus = self.ability_modifiers[weapon_stats["ability"]]
+            # Relevant ability bonus
+            if "finesse" in weapon_stats["properties"]:
+                if self.ability_modifiers["STR"] >= self.ability_modifiers["DEX"]:
+                    relevant_ability = "STR"
+                else:
+                    relevant_ability = "DEX"
+            elif weapon_stats["range"] == "melee":
+                relevant_ability = "STR"
+            else:
+                relevant_ability = "DEX"
+            relevant_ability_bonus = self.ability_modifiers[relevant_ability]
+            # To hit modifier
             to_hit = relevant_ability_bonus
             if weapon in self.weapon_proficiencies:
                 to_hit += self.proficiency_bonus
@@ -50,20 +60,47 @@ class PC(Creature):
             elif relevant_ability_bonus < 0:
                 damage += str(relevant_ability_bonus)
             # Convert to action dictionary
-            actions[weapon] = {
-            "to_hit": str(to_hit),
-            "damage": [
-            {
-            "damage_dice": damage,
-            "damage_type": weapon_stats["damage_type"]
-            }
-            ],
-            "effects": []
-            }
+            name = weapon
+            versatile = False
+            if "versatile" in weapon_stats["properties"]:
+                name += " 1"
+                versatile = True
+            range = weapon_stats["range"]
+            if "reach" in weapon_stats["properties"]:
+                range += " + 5ft"
+            actions[name] = loader.get_simple_action_dictionary(range, to_hit, damage, weapon_stats["damage_type"])
+            # Add commands
             try:
-                actions[weapon]["commands"] = weapon_stats["commands"]
+                if versatile:
+                    actions[name]["commands"] = []
+                    for command in weapon_stats["commands"]:
+                        actions[name]["commands"].append(command + " 1")
+                else:
+                    actions[name]["commands"] = weapon_stats["commands"]
             except:
                 pass
+            # If versatile, add another action with alt damage dice and different commands
+            if versatile:
+                name = weapon + " 2"
+                alternate_damage = weapon_stats["alternate_damage_dice"]
+                if relevant_ability_bonus > 0:
+                    alternate_damage += "+" + str(relevant_ability_bonus)
+                elif relevant_ability_bonus < 0:
+                    alternate_damage += str(relevant_ability_bonus)
+                actions[name] = loader.get_simple_action_dictionary(range, to_hit, alternate_damage, weapon_stats["damage_type"])
+                try:
+                    actions[name]["commands"] = []
+                    for command in weapon_stats["commands"]:
+                        actions[name]["commands"].append(command + " 2")
+                except:
+                    pass
+            if "thrown" in weapon_stats["properties"]:
+                name = weapon + " thrown"
+                actions[name] = loader.get_simple_action_dictionary(weapon_stats["thrown_range"], to_hit, damage, weapon_stats["damage_type"])
+
+        for action_name, action in actions.items():
+            print(action_name)
+            print(action)
         Creature.__init__(self, object["name"], object["max_health"], actions)
 
     def save(self, ability, save_dc):
@@ -72,6 +109,6 @@ class PC(Creature):
         return save_success, saving_throw
 
 if __name__ == "__main__":
-    pc = PC(loader.get_pc("cha_racter"))
+    pc = PC(loader.get_pc("igor"))
     print(pc)
-    pc.action("longbow")
+    pc.action("dagger thrown")

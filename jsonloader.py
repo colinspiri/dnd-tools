@@ -39,6 +39,19 @@ def get_command_names():
 def get_command_description(requested_command):
     return get_object(requested_command, "commands.json")
 
+def get_simple_action_dictionary(range, to_hit, damage_dice, damage_type):
+    return {
+    "range": str(range),
+    "to_hit": str(to_hit),
+    "damage": [
+    {
+    "damage_dice": str(damage_dice),
+    "damage_type": str(damage_type)
+    }
+    ],
+    "effects": []
+    }
+
 if __name__ == "__main__":
     command = get_command_description("help")
     print(command)

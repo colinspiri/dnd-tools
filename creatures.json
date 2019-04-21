@@ -16,6 +16,7 @@
     },
     "actions": {
       "quarterstaff": {
+        "range": "melee",
         "to_hit": "+2",
         "damage": [
           {
@@ -45,6 +46,7 @@
     },
     "actions": {
       "bite": {
+        "range": "melee",
         "to_hit": "+4",
         "damage": [
           {
@@ -76,6 +78,7 @@
     },
     "actions": {
       "slam": {
+        "range": "melee",
         "to_hit": "+3",
         "damage": [
           {
@@ -106,6 +109,7 @@
     },
     "actions": {
       "bite": {
+        "range": "melee",
         "to_hit": "+4",
         "damage": [
           {
@@ -118,6 +122,7 @@
         ]
       },
       "claw": {
+        "range": "melee",
         "to_hit": "+4",
         "damage": [
           {
@@ -129,7 +134,8 @@
         ]
       },
       "spear_strong": {
-        "commands": ["spear strong", "spear two-handed", "spear two", "spear 2"],
+        "commands": ["spear strong", "spear 2"],
+        "range": "melee",
         "to_hit": "+4",
         "damage": [
           {
@@ -141,7 +147,8 @@
         ]
       },
       "spear_light": {
-        "commands": ["spear", "spear light", "spear one-handed", "spear one", "spear 1"],
+        "commands": ["spear", "spear light", "spear 1"],
+        "range": "melee",
         "to_hit": "+4",
         "damage": [
           {
@@ -174,6 +181,7 @@
     },
     "actions": {
       "bite": {
+        "range": "melee",
         "to_hit": "+6",
         "damage": [
           {
@@ -191,6 +199,7 @@
         ]
       },
       "claw": {
+        "range": "melee",
         "to_hit": "+6",
         "damage": [
           {
@@ -224,6 +233,7 @@
     },
     "actions": {
       "bite": {
+        "range": "melee",
         "to_hit": "+9",
         "damage": [
           {
@@ -242,6 +252,7 @@
       },
       "unarmed": {
         "commands": ["hit", "claw"],
+        "range": "melee",
         "to_hit": "+9",
         "damage": [
           {
@@ -277,6 +288,7 @@
     },
     "actions": {
       "bite": {
+        "range": "melee",
         "to_hit": "+4",
         "damage": [
           {
@@ -288,6 +300,7 @@
         ]
       },
       "claw": {
+        "range": "melee",
         "to_hit": "+4",
         "damage": [
           {
@@ -317,6 +330,7 @@
     },
     "actions": {
       "scimitar": {
+        "range": "melee",
         "to_hit": "+3",
         "damage": [
           {

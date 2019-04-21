@@ -1,34 +1,42 @@
 {
   "dagger": {
+    "range": "melee",
     "damage_dice": "1d4",
     "damage_type": "piercing",
-    "ability": "DEX"
+    "properties": ["finesse", "thrown"],
+    "thrown_range": "20/60"
   },
   "quarterstaff": {
+    "range": "melee",
     "commands": ["staff"],
     "damage_dice": "1d6",
     "damage_type": "bludgeoning",
-    "ability": "STR"
+    "properties": ["versatile"],
+    "alternate_damage_dice": "1d8"
   },
   "dart": {
+    "range": "20/60",
     "damage_dice": "1d4",
     "damage_type": "piercing",
-    "ability": "DEX"
+    "properties": ["finesse"]
   },
   "light_crossbow": {
+    "range": "80/320",
     "commands": ["light crossbow", "crossbow light"],
     "damage_dice": "1d8",
     "damage_type": "piercing",
-    "ability": "DEX"
+    "properties": []
   },
   "shortsword": {
+    "range": "melee",
     "damage_dice": "1d6",
     "damage_type": "piercing",
-    "ability": "STR"
+    "properties": []
   },
   "longbow": {
+    "range": "150/600",
     "damage_dice": "1d8",
     "damage_type": "piercing",
-    "ability": "DEX"
+    "properties": []
   }
 }

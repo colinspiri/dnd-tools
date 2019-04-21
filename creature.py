@@ -35,10 +35,11 @@ class Creature(Entity):
         basic_damage_type = action["damage"][0]["damage_type"]
 
         # Show summary of action
-        summary = self.name + " attacks with " + to_hit + " to hit and deals " + basic_damage_dice + " " + basic_damage_type + " damage"
+        summary = self.name + " attacks at a range of " + action["range"] + " with " + to_hit + " to hit and deals " + basic_damage_dice + " " + basic_damage_type + " damage"
         for i in range(1, len(damages)):
             summary += " and " + damages[i]["damage_dice"] + " " + damages[i]["damage_type"] + " damage"
-        print(summary + ".")
+        summary += "."
+        print(summary)
 
         # Show attack with basic damage
         critical = dice.show_attack(to_hit, basic_damage_dice, basic_damage_type)[2]
