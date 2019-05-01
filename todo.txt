@@ -1,12 +1,13 @@
 TODO
 
 todo current commit:
--add character_tracker.py to view character sheets
--make commands into functions called by the elif statements
+-add more weapons (and categories [simple, martial])
+-add special property that adds description as effects to print
+
+Added weapon types (simple, martial) and special property to print effects; Added all weapons
 
 todo later:
 -add commands to view and roll actions for pcs
--add more weapons (and categories [simple, martial])
 -roll initiative automatically for monsters based on dex scores
 -add passive abilities to print
 -make actions able to execute commands to roll things?

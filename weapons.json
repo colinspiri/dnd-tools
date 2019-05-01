@@ -1,43 +1,288 @@
 {
+  "club": {
+    "type": "simple",
+    "range": "melee",
+    "damage_dice": "1d4",
+    "damage_type": "bludgeoning",
+    "properties": []
+  },
   "dagger": {
+    "type": "simple",
     "range": "melee",
     "damage_dice": "1d4",
     "damage_type": "piercing",
     "properties": ["finesse", "thrown"],
     "thrown_range": "20/60"
   },
-  "quarterstaff": {
+  "greatclub": {
+    "type": "simple",
     "range": "melee",
+    "damage_dice": "1d8",
+    "damage_type": "bludgeoning",
+    "properties": []
+  },
+  "handaxe": {
+    "type": "simple",
+    "range": "melee",
+    "damage_dice": "1d6",
+    "damage_type": "slashing",
+    "properties": ["thrown"],
+    "thrown_range": "20/60"
+  },
+  "javelin": {
+    "type": "simple",
+    "range": "melee",
+    "damage_dice": "1d6",
+    "damage_type": "piercing",
+    "properties": ["thrown"],
+    "thrown_range": "30/120"
+  },
+  "light_hammer": {
+    "name": "Light Hammer",
+    "type": "simple",
+    "range": "melee",
+    "damage_dice": "1d4",
+    "damage_type": "bludgeoning",
+    "properties": ["thrown"],
+    "thrown_range": "20/60"
+  },
+  "mace": {
+    "type": "simple",
+    "range": "melee",
+    "damage_dice": "1d6",
+    "damage_type": "bludgeoning",
+    "properties": []
+  },
+  "quarterstaff": {
     "commands": ["staff"],
+    "type": "simple",
+    "range": "melee",
     "damage_dice": "1d6",
     "damage_type": "bludgeoning",
     "properties": ["versatile"],
     "alternate_damage_dice": "1d8"
   },
+  "sickle": {
+    "type": "simple",
+    "range": "melee",
+    "damage_dice": "1d4",
+    "damage_type": "slashing",
+    "properties": []
+  },
+  "spear": {
+    "type": "simple",
+    "range": "melee",
+    "damage_dice": "1d6",
+    "damage_type": "piercing",
+    "properties": ["thrown", "versatile"],
+    "thrown_range": "20/60",
+    "alternate_damage_dice": "1d8"
+  },
+
+  "crossbow_light": {
+    "name": "Crossbow, light",
+    "commands": ["light crossbow", "crossbow light"],
+    "type": "simple",
+    "range": "80/320",
+    "damage_dice": "1d8",
+    "damage_type": "piercing",
+    "properties": []
+  },
   "dart": {
+    "type": "simple",
     "range": "20/60",
     "damage_dice": "1d4",
     "damage_type": "piercing",
     "properties": ["finesse"]
   },
-  "light_crossbow": {
-    "name": "Crossbow, Light",
+  "shortbow": {
+    "type": "simple",
     "range": "80/320",
-    "commands": ["light crossbow", "crossbow light"],
-    "damage_dice": "1d8",
-    "damage_type": "piercing",
-    "properties": []
-  },
-  "shortsword": {
-    "range": "melee",
     "damage_dice": "1d6",
     "damage_type": "piercing",
     "properties": []
   },
+  "sling": {
+    "type": "simple",
+    "range": "30/120",
+    "damage_dice": "1d4",
+    "damage_type": "bludgeoning",
+    "properties": []
+  },
+
+  "battleaxe": {
+    "type": "martial",
+    "range": "melee",
+    "damage_dice": "1d8",
+    "damage_type": "slashing",
+    "properties": ["versatile"],
+    "alternate_damage_dice": "1d10"
+  },
+  "flail": {
+    "type": "martial",
+    "range": "melee",
+    "damage_dice": "1d8",
+    "damage_type": "bludgeoning",
+    "properties": []
+  },
+  "glaive": {
+    "type": "martial",
+    "range": "melee",
+    "damage_dice": "1d10",
+    "damage_type": "slashing",
+    "properties": ["reach"]
+  },
+  "greataxe": {
+    "type": "martial",
+    "range": "melee",
+    "damage_dice": "1d12",
+    "damage_type": "slashing",
+    "properties": []
+  },
+  "greatsword": {
+    "type": "martial",
+    "range": "melee",
+    "damage_dice": "2d6",
+    "damage_type": "slashing",
+    "properties": []
+  },
+  "halberd": {
+    "type": "martial",
+    "range": "melee",
+    "damage_dice": "1d10",
+    "damage_type": "slashing",
+    "properties": ["reach"]
+  },
+  "lance": {
+    "type": "martial",
+    "range": "melee",
+    "damage_dice": "1d12",
+    "damage_type": "piercing",
+    "properties": ["reach", "special"],
+    "effects": ["You have disadvantage when you use a lance to Attack a target within 5 feet of you.", "A lance requires two hands to wield when you aren’t mounted."]
+  },
+  "longsword": {
+    "type": "martial",
+    "range": "melee",
+    "damage_dice": "1d8",
+    "damage_type": "slashing",
+    "properties": ["versatile"],
+    "alternate_damage_dice": "1d10"
+  },
+  "maul": {
+    "type": "martial",
+    "range": "melee",
+    "damage_dice": "2d6",
+    "damage_type": "bludgeoning",
+    "properties": []
+  },
+  "morningstar": {
+    "type": "martial",
+    "range": "melee",
+    "damage_dice": "1d8",
+    "damage_type": "piercing",
+    "properties": []
+  },
+  "pike": {
+    "type": "martial",
+    "range": "melee",
+    "damage_dice": "1d10",
+    "damage_type": "piercing",
+    "properties": ["reach"]
+  },
+  "rapier": {
+    "type": "martial",
+    "range": "melee",
+    "damage_dice": "1d8",
+    "damage_type": "piercing",
+    "properties": ["finesse"]
+  },
+  "scimitar": {
+    "type": "martial",
+    "range": "melee",
+    "damage_dice": "1d6",
+    "damage_type": "slashing",
+    "properties": ["finesse"]
+  },
+  "shortsword": {
+    "type": "martial",
+    "range": "melee",
+    "damage_dice": "1d6",
+    "damage_type": "piercing",
+    "properties": ["finesse"]
+  },
+  "trident": {
+    "type": "martial",
+    "range": "melee",
+    "damage_dice": "1d6",
+    "damage_type": "piercing",
+    "properties": ["thrown", "versatile"],
+    "thrown_range": "20/60",
+    "alternate_damage_dice": "1d8"
+  },
+  "war_pick": {
+    "name": "War Pick",
+    "commands": ["pick", "pickaxe", "war pick"],
+    "type": "martial",
+    "range": "melee",
+    "damage_dice": "1d8",
+    "damage_type": "piercing",
+    "properties": []
+  },
+  "warhammer": {
+    "type": "martial",
+    "range": "melee",
+    "damage_dice": "1d8",
+    "damage_type": "bludgeoning",
+    "properties": ["versatile"],
+    "alternate_damage_dice": "1d10"
+  },
+  "whip": {
+    "type": "martial",
+    "range": "melee",
+    "damage_dice": "1d4",
+    "damage_type": "slashing",
+    "properties": ["finesse", "reach"]
+  },
+
+  "blowgun": {
+    "type": "martial",
+    "range": "25/100",
+    "damage_dice": "1d1",
+    "damage_type": "piercing",
+    "properties": []
+  },
+  "crossbow_hand": {
+    "name": "Crossbow, hand",
+    "commands": ["hand crossbow", "crossbow hand"],
+    "type": "martial",
+    "range": "30/120",
+    "damage_dice": "1d6",
+    "damage_type": "piercing",
+    "properties": []
+  },
+  "crossbow_heavy": {
+    "name": "Crossbow, heavy",
+    "commands": ["crossbow heavy", "heavy crossbow"],
+    "type": "martial",
+    "range": "100/140",
+    "damage_dice": "1d10",
+    "damage_type": "piercing",
+    "properties": []
+  },
   "longbow": {
+    "type": "martial",
     "range": "150/600",
     "damage_dice": "1d8",
     "damage_type": "piercing",
     "properties": []
+  },
+  "net": {
+    "type": "martial",
+    "range": "5/15",
+    "damage_dice": "0",
+    "damage_type": "",
+    "properties": ["special"],
+    "effects": ["A Large or smaller creature hit by a net is Restrained until it is freed. A net has no effect on creatures that are formless, or creatures that are Huge or larger. A creature can use its action to make a DC 10 Strength check, freeing itself or another creature within its reach on a success. Dealing 5 slashing damage to the net (AC 10) also frees the creature without harming it, ending the effect and destroying the net. When you use an action, Bonus Action, or Reaction to Attack with a net, you can make only one Attack regardless of the number of attacks you can normally make."]
   }
 }

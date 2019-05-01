@@ -22,8 +22,8 @@
       "insight": 1,
       "perception": 1
     },
-    "weapon_proficiencies": ["dagger", "light_crossbow", "quarterstaff"],
-    "weapons": ["dagger", "light_crossbow", "dart", "quarterstaff"]
+    "weapon_proficiencies": ["crossbow_light", "dagger", "dart", "quarterstaff", "sling"],
+    "weapons": ["crossbow_light", "lance", "net"]
   },
   "cha_racter": {
     "name": "Cha Racter",

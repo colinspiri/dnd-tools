@@ -47,15 +47,15 @@ class PC(Creature):
             relevant_ability_bonus = self.ability_modifiers[relevant_ability]
             # To hit modifier
             to_hit = relevant_ability_bonus
-            if weapon in self.weapon_proficiencies:
+            if weapon in self.weapon_proficiencies or weapon_stats["type"] in self.weapon_proficiencies:
                 to_hit += self.proficiency_bonus
             if to_hit > 0:
                 to_hit = "+" + str(to_hit)
             else:
-                to_hit = str("to_hit")
+                to_hit = str(to_hit)
             # Damage
             damage = weapon_stats["damage_dice"]
-            if relevant_ability_bonus > 0:
+            if damage != "0" and relevant_ability_bonus > 0:
                 damage += "+" + str(relevant_ability_bonus)
             elif relevant_ability_bonus < 0:
                 damage += str(relevant_ability_bonus)
@@ -74,6 +74,8 @@ class PC(Creature):
             if "reach" in weapon_stats["properties"]:
                 range += " + 5ft"
             actions[action_name] = loader.get_simple_action_dictionary(formatted_name, range, to_hit, damage, weapon_stats["damage_type"])
+            if "special" in weapon_stats["properties"]:
+                actions[action_name]["effects"] = weapon_stats["effects"]
             # Add commands
             try:
                 if versatile:
