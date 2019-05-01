@@ -1,4 +1,4 @@
-from creature import Creature
+from entity import Entity
 from npc import NPC
 import jsonloader as loader
 
@@ -92,7 +92,7 @@ def input_initiative():
         try:
             new_creature = NPC(loader.get_creature(name))
         except:
-            new_creature = Creature(name.capitalize())
+            new_creature = Entity(name.capitalize())
         initiative.add_creature(new_creature, int(words[1]))
 
     return initiative

@@ -21,6 +21,7 @@
     "properties": ["finesse"]
   },
   "light_crossbow": {
+    "name": "Crossbow, Light",
     "range": "80/320",
     "commands": ["light crossbow", "crossbow light"],
     "damage_dice": "1d8",

@@ -31,8 +31,8 @@ class Creature(Entity):
         # Get to hit and damage amounts
         to_hit = action["to_hit"]
         damages = action["damage"]
-        basic_damage_dice = action["damage"][0]["damage_dice"]
-        basic_damage_type = action["damage"][0]["damage_type"]
+        basic_damage_dice = damages[0]["damage_dice"]
+        basic_damage_type = damages[0]["damage_type"]
 
         # Show summary of action
         summary = self.name + " attacks at a range of " + action["range"] + " with " + to_hit + " to hit and deals " + basic_damage_dice + " " + basic_damage_type + " damage"
@@ -57,5 +57,33 @@ class Creature(Entity):
             print("-" + action["effects"][i])
         return
 
+    def str_actions(self):
+        text = "Actions: \n"
+        for action_name in self.actions.keys():
+            text += self.str_action_long(action_name)
+        text += "\n"
+        return text
+    def str_action_long(self, action_name):
+        action = self.actions[action_name]
+        text = action["name"] + ". "
+        if action["range"] == "melee":
+            text += "Melee weapon attack: "
+        else:
+            text += "Ranged weapon attack: "
+        text += action["to_hit"] + " to hit, reach " + action["range"] + ", one target. "
+        damages = action["damage"]
+        text += "Hit: (" + damages[0]["damage_dice"] + ") " + damages[0]["damage_type"] + " damage"
+        for i in range(1, len(damages)):
+            text += " and (" + damages[i]["damage_dice"] + ") " + damages[i]["damage_type"] + " damage"
+        text += ".\n"
+        return text
+    def str_action_short(self, action_name):
+        action = self.actions[action_name]
+        damages = action["damage"]
+        text = action_name + ": " + action["to_hit"] + ", (" + damages[0]["damage_dice"] + ") " + damages[0]["damage_type"] + " damage"
+        for i in range(1, len(damages)):
+            text += " + (" + damages[i]["damage_dice"] + ") " + damages[i]["damage_type"] + " damage"
+        text += "\n"
+        return text
     def __str__(self):
         return self.name + " has " + str(self.current_health) + "/" + str(self.max_health) + " health."

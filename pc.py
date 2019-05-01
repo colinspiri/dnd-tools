@@ -60,53 +60,88 @@ class PC(Creature):
             elif relevant_ability_bonus < 0:
                 damage += str(relevant_ability_bonus)
             # Convert to action dictionary
-            name = weapon
+            action_name = weapon
+            try:
+                formatted_name = weapon_stats["name"]
+            except:
+                formatted_name = weapon.capitalize()
             versatile = False
             if "versatile" in weapon_stats["properties"]:
-                name += " 1"
+                action_name += " 1"
+                formatted_name += ", One-Handed"
                 versatile = True
             range = weapon_stats["range"]
             if "reach" in weapon_stats["properties"]:
                 range += " + 5ft"
-            actions[name] = loader.get_simple_action_dictionary(range, to_hit, damage, weapon_stats["damage_type"])
+            actions[action_name] = loader.get_simple_action_dictionary(formatted_name, range, to_hit, damage, weapon_stats["damage_type"])
             # Add commands
             try:
                 if versatile:
-                    actions[name]["commands"] = []
+                    actions[action_name]["commands"] = []
                     for command in weapon_stats["commands"]:
-                        actions[name]["commands"].append(command + " 1")
+                        actions[action_name]["commands"].append(command + " 1")
                 else:
-                    actions[name]["commands"] = weapon_stats["commands"]
+                    actions[action_name]["commands"] = weapon_stats["commands"]
             except:
                 pass
             # If versatile, add another action with alt damage dice and different commands
             if versatile:
-                name = weapon + " 2"
+                action_name = weapon + " 2"
+                try:
+                    formatted_name = weapon_stats["name"] + ", Two-Handed"
+                except:
+                    formatted_name = weapon.capitalize() + ", Two-Handed"
                 alternate_damage = weapon_stats["alternate_damage_dice"]
                 if relevant_ability_bonus > 0:
                     alternate_damage += "+" + str(relevant_ability_bonus)
                 elif relevant_ability_bonus < 0:
                     alternate_damage += str(relevant_ability_bonus)
-                actions[name] = loader.get_simple_action_dictionary(range, to_hit, alternate_damage, weapon_stats["damage_type"])
+                actions[action_name] = loader.get_simple_action_dictionary(formatted_name, range, to_hit, alternate_damage, weapon_stats["damage_type"])
                 try:
-                    actions[name]["commands"] = []
+                    actions[action_name]["commands"] = []
                     for command in weapon_stats["commands"]:
-                        actions[name]["commands"].append(command + " 2")
+                        actions[action_name]["commands"].append(command + " 2")
                 except:
                     pass
             if "thrown" in weapon_stats["properties"]:
-                name = weapon + " thrown"
-                actions[name] = loader.get_simple_action_dictionary(weapon_stats["thrown_range"], to_hit, damage, weapon_stats["damage_type"])
+                action_name = weapon + " thrown"
+                formatted_name += ", Thrown"
+                actions[action_name] = loader.get_simple_action_dictionary(formatted_name, weapon_stats["thrown_range"], to_hit, damage, weapon_stats["damage_type"])
 
-        for action_name, action in actions.items():
-            print(action_name)
-            print(action)
         Creature.__init__(self, object["name"], object["max_health"], actions)
 
     def save(self, ability, save_dc):
         save_bonus = self.saving_throws[ability]
         save_success, saving_throw = dice.show_save(str(save_bonus), save_dc)
         return save_success, saving_throw
+
+    def str_ability_scores(self):
+        text = "Ability Scores: \n"
+        for ability, score in self.ability_scores.items():
+            modifier = self.ability_modifiers[ability]
+            if modifier > 0:
+                text += ability + ": " + str(score) + " (+" + str(modifier) + ")\n"
+            else:
+                text += ability + ": " + str(score) + " (" + str(modifier) + ")\n"
+        return text
+    def str_weapons(self):
+        text = "Weapons: "
+        for i in range(len(self.weapons)):
+            text += self.weapons[i]
+            if i < len(self.weapons) - 1:
+                text += ", "
+        text += "\n"
+        return text
+
+    def __str__(self):
+        text = self.name + "\n"
+        text += "HP: " + str(self.current_health) + "/" + str(self.max_health) + "\n"
+        text += "AC: " + str(self.armor_class) + "\n"
+        text += self.str_ability_scores()
+        text += self.str_weapons()
+        text += self.str_actions()
+
+        return text + "\n"
 
 if __name__ == "__main__":
     pc = PC(loader.get_pc("igor"))

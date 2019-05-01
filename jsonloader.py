@@ -39,8 +39,9 @@ def get_command_names():
 def get_command_description(requested_command):
     return get_object(requested_command, "commands.json")
 
-def get_simple_action_dictionary(range, to_hit, damage_dice, damage_type):
+def get_simple_action_dictionary(name, range, to_hit, damage_dice, damage_type):
     return {
+    "name": str(name),
     "range": str(range),
     "to_hit": str(to_hit),
     "damage": [
