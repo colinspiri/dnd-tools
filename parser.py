@@ -62,7 +62,7 @@ def command_damage(initiative, components):
     damage_amount = "".join(components)
     if not damage_amount.isdigit():
         _, _, damage_amount = dice.show_roll(damage_amount)
-    initiative.damage_current_creature(int(damage_amount))
+    initiative.damage_current_entity(int(damage_amount))
 def command_heal(initiative, components):
     if len(components) == 0:
         print("Invalid input. Heal command requires a parameter.")
@@ -70,16 +70,16 @@ def command_heal(initiative, components):
     heal_amount = "".join(components)
     if not heal_amount.isdigit():
         _, _, heal_amount = dice.show_roll(heal_amount)
-    initiative.damage_current_creature(-1*int(heal_amount))
+    initiative.damage_current_entity(-1*int(heal_amount))
 def command_remove(initiative, components):
     if len(components) == 0:
-        initiative.get_current_creature().dead = True
+        initiative.get_current_entity().dead = True
     # Remove INDEX
     else:
         initiative.order[int(components[0])]["creature"].dead = True
-    initiative.remove_dead_creatures()
+    initiative.remove_dead_entities()
 def command_action(initiative, components):
-    creature = initiative.get_current_creature()
+    creature = initiative.get_current_entity()
     if len(components) == 0:
         creature.show_actions()
     # Action ACTION_NAME
@@ -89,7 +89,7 @@ def command_save(initiative, components):
     if len(components) == 0:
         print("Invalid input. Save command requires more components.")
         return
-    creature = initiative.get_current_creature()
+    creature = initiative.get_current_entity()
     # Save ABILITY DC
     try:
         ability = components[0].upper()
