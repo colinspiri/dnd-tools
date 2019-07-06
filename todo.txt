@@ -1,8 +1,6 @@
 CURRENT COMMIT
 todo:
--"damage NAME" to damage a creature in initiative order
--when a creature takes damage equal to its hp, prompt user if the creature should be killed
-
+-add commands to npcs
 
 LATER
 

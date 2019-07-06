@@ -10,11 +10,7 @@ class Entity:
         if hasattr(self, 'current_health'):
             self.current_health -= damage
             if self.current_health <= 0:
-                print(self.name + " has dropped to " + str(self.current_health) + " hit points. Consider them dead?")
-                text = input("> ").strip()
-                if text == "y" or text == "yes":
-                    self.dead = True
-                    print(self.name + " died.")
+                print(self.name + " has dropped to " + str(self.current_health) + " hit points. Use the 'remove' command to consider them dead.")
             elif self.current_health > self.max_health:
                 self.current_health = self.max_health
                 self.damage_taken = 0

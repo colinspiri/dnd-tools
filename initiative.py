@@ -19,8 +19,16 @@ class Initiative:
         return self.order[self.turn]["entity"]
     def get_entity(self, name):
         for set in self.order:
-            if set["entity"].name.lower() == name.lower():
-                return set["entity"]
+            entity = set["entity"]
+            if name.lower() == entity.name.lower():
+                return entity
+            else:
+                try:
+                    for command in entity.commands:
+                        if name.lower() == command.lower():
+                            return entity
+                except:
+                    pass
 
     def damage_current_entity(self, damage_amount):
         self.damage_entity(self.get_current_entity(), damage_amount)
@@ -127,9 +135,12 @@ def input_initiative():
             for i in range(entity_count):
                 try:
                     new_entity_instance = NPC(loader.get_creature(name))
+                    for c in range(len(new_entity_instance.commands)):
+                        new_entity_instance.commands[c] += str(i + 1)
                 except:
                     new_entity_instance = Entity(name.capitalize())
-                new_entity_instance.name = new_entity_instance.name + str(i + 1)
+                new_entity_instance.name += str(i + 1)
+                print(new_entity_instance.commands)
                 initiative.add_entity(new_entity_instance, initiative_result)
         else:
             initiative.add_entity(new_entity, initiative_result)

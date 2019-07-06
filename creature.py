@@ -3,8 +3,10 @@ import constants
 import dice
 
 class Creature(Entity):
-    def __init__(self, name, max_health, actions):
+    def __init__(self, name, commands, max_health, actions):
         Entity.__init__(self, name)
+        self.commands = commands
+        
         self.max_health = max_health
         self.current_health = self.max_health
 

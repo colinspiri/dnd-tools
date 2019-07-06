@@ -19,9 +19,12 @@ class NPC(Creature):
         for ability, modifier in object["saving_throws"].items():
             self.saving_throws[ability] = modifier
 
-        Creature.__init__(self, object["name"], max_health, object["actions"])
+        try:
+            commands = object["commands"]
+        except:
+            commands = []
 
-    
+        Creature.__init__(self, object["name"], commands, max_health, object["actions"])
 
     def save(self, ability, save_dc):
         save_bonus = self.saving_throws[ability]

@@ -74,10 +74,17 @@ def command_heal(initiative, components):
     if len(components) == 0:
         print("Invalid input. Heal command requires more parameters.")
         return
-    heal_amount = "".join(components)
-    if not heal_amount.isdigit():
-        _, _, heal_amount = dice.show_roll(heal_amount)
-    initiative.damage_current_entity(-1*int(heal_amount))
+    elif len(components) == 1:
+        heal_amount = components[0]
+        if not heal_amount.isdigit():
+            _, _, heal_amount = dice.show_roll(heal_amount)
+        initiative.damage_current_entity(-1*int(heal_amount))
+    else:
+        name = components[0]
+        heal_amount = components[1]
+        if not heal_amount.isdigit():
+            _, _, heal_amount = dice.show_roll(heal_amount)
+        initiative.damage_entity(initiative.get_entity(name), -1*int(heal_amount))
 def command_remove(initiative, components):
     if len(components) == 0:
         initiative.get_current_entity().dead = True

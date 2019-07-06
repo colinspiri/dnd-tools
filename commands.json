@@ -1,11 +1,11 @@
 {
   "help": "The 'help' command shows the description of a given command. Used without a parameter, the command shows a list of all available commands.",
-  "next": "The 'next' command ends the current creature's turn, moving to the next person in the initiative order. No parameters taken.",
+  "next": "The 'next' command ends the current entity's turn, moving to the next person in the initiative order. No parameters taken.",
   "end": "The 'end' command ends the program. No parameters taken.",
   "roll": "The 'roll' command rolls dice in three different ways. If the first parameter is 'attack', the command rolls an attack roll with the second parameter as the to-hit modifier and the third parameter as the damage dice. If the first parameter is 'save', the commnand rolls a saving throw with the second parameter as the saving throw modifier and the third parameter as the DC. If neither 'attack' nor 'save' is present as the first parameter, the command rolls the dice amount, adding any specified modifiers.",
-  "damage": "The 'damage' command inflicts an amount of damage equal to the given parameter to the current creature in the initiative order. If a dice amount is given instead of a number, the dice will be rolled and the result taken instead.",
-  "heal": "The 'heal' command heals an amount of health equal to the given parameter to the current creature in the initiative order. If a dice amount is given instead of a number, the dice will be rolled and the result taken instead.",
-  "remove": "The 'remove' command removes a given creature (by index in initiative order) from the initiative order. Used without a parameter, the command removes the current creature from the order.",
-  "action": "The 'action' command executes a given action from the current creature's statistics, rolling all relevant to-hit and damage rolls and printing all extra traits' descriptions. Used without a parameter, the command shows a list of the current creature's available actions.",
-  "save": "The 'save' command rolls a saving throw using the current creature's statistics. The first parameter given is the ability to use (STR, CON, etc.) and the second parameter given is the DC to roll against."
+  "damage": "The 'damage' command inflicts damage to the specified entity equal to the second parameter given. If no entity is specified, the damage is done to the current entity in the initiative order. If a dice amount is given instead of a number, the dice will be rolled and the result taken instead.",
+  "heal": "The 'heal' command heals an amount of health equal to the given parameter to the current entity in the initiative order. If a dice amount is given instead of a number, the dice will be rolled and the result taken instead.",
+  "remove": "The 'remove' command removes a given entity (by index in initiative order) from the initiative order. Used without a parameter, the command removes the current entity from the order.",
+  "action": "The 'action' command executes a given action from the current entity's statistics, rolling all relevant to-hit and damage rolls and printing all extra traits' descriptions. Used without a parameter, the command shows a list of the current entity's available actions.",
+  "save": "The 'save' command rolls a saving throw using the current entity's statistics. The first parameter given is the ability to use (STR, CON, etc.) and the second parameter given is the DC to save against."
 }
