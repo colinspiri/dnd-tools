@@ -23,7 +23,12 @@ class NPC(Creature):
 
     
 
+    def save(self, ability, save_dc):
+        save_bonus = self.saving_throws[ability]
+        save_success, saving_throw = dice.show_save(str(save_bonus), save_dc)
+        return save_success, saving_throw
+
 if __name__ == "__main__":
-    npc = NPC(loader.get_creature("wolf"))
-    print(npc)
+    npc = NPC(loader.get_creature("strahd"))
+    print(npc.saving_throws)
     npc.action("bite")

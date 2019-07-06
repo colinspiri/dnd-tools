@@ -1,17 +1,15 @@
 CURRENT COMMIT
 todo:
--roll initiative automatically for monsters based on dex scores
--fix wording of creature vs. entity
--spawn numbers of entities in initiative order that act separately
+-"damage NAME" to damage a creature in initiative order
+-when a creature takes damage equal to its hp, prompt user if the creature should be killed
+
 
 LATER
 
 todo combat:
--spawn numbers of entities in order that act on the same turn
--"damage NAME" to damage a creature in initiative order
--when a creature takes damage equal to its hp, prompt user if the creature should be killed
 -move people in initiative using numbers meaning the ranking of initiative (move NAME 1 will move it to the top of the order)
 -add passive abilities to print
+-add "adv" or "dis" after actions to specify advantage or disadvantage on d20 roll
 
 todo rules lookup:
 -add resistances, immunities, vulnerabilities

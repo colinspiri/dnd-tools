@@ -17,10 +17,16 @@ class Initiative:
         self.sort()
     def get_current_entity(self):
         return self.order[self.turn]["entity"]
+    def get_entity(self, name):
+        for set in self.order:
+            if set["entity"].name.lower() == name.lower():
+                return set["entity"]
 
     def damage_current_entity(self, damage_amount):
+        self.damage_entity(self.get_current_entity(), damage_amount)
+
+    def damage_entity(self, entity, damage_amount):
         # Take damage
-        entity = self.get_current_entity()
         entity.take_damage(damage_amount)
         # If dead, remove from order and adjust accordingly
         if entity.dead:
@@ -88,9 +94,11 @@ def input_initiative():
             break
         words = text.split()
         if words[0].isdigit():
-            name = words[1].lower()
+            count_specified = True
             entity_count = int(words[0])
+            name = words[1].lower()
         else:
+            count_specified = False
             name = words[0].lower()
             entity_count = 1
 
@@ -102,14 +110,17 @@ def input_initiative():
 
         # Get the initiative roll
         try:
-            initiative_roll = int(words[1])
+            if count_specified:
+                initiative_result = int(words[2])
+            else:
+                initiative_result = int(words[1])
         except:
-            initiative_roll = dice.random_int(20)
+            initiative_result = dice.random_int(20)
             try:
-                initiative_roll += new_entity.ability_modifiers["DEX"]
+                initiative_result += new_entity.ability_modifiers["DEX"]
             except:
                 pass
-            print(new_entity.name + " is being placed at initiative count " + str(initiative_roll) + ".")
+            print("Rolled " + str(initiative_result) + " for initiative.")
 
         # Add it to the order
         if words[0].isdigit():
@@ -119,7 +130,7 @@ def input_initiative():
                 except:
                     new_entity_instance = Entity(name.capitalize())
                 new_entity_instance.name = new_entity_instance.name + str(i + 1)
-                initiative.add_entity(new_entity_instance, initiative_roll)
+                initiative.add_entity(new_entity_instance, initiative_result)
         else:
-            initiative.add_entity(new_entity, initiative_roll)
+            initiative.add_entity(new_entity, initiative_result)
     return initiative

@@ -44,7 +44,7 @@ def command_end():
     quit()
 def command_roll(components):
     if len(components) == 0:
-        print("Invalid input. Roll command requires more components.")
+        print("Invalid input. Roll command requires more parameters.")
         return
     # Roll attack
     elif components[0] == "attack":
@@ -57,15 +57,22 @@ def command_roll(components):
         dice.show_roll("".join(components))
 def command_damage(initiative, components):
     if len(components) == 0:
-        print("Invalid input. Damage command requires more components.")
+        print("Invalid input. Damage command requires more parameters.")
         return
-    damage_amount = "".join(components)
-    if not damage_amount.isdigit():
-        _, _, damage_amount = dice.show_roll(damage_amount)
-    initiative.damage_current_entity(int(damage_amount))
+    elif len(components) == 1:
+        damage_amount = components[0]
+        if not damage_amount.isdigit():
+            _, _, damage_amount = dice.show_roll(damage_amount)
+        initiative.damage_current_entity(int(damage_amount))
+    else:
+        name = components[0]
+        damage_amount = components[1]
+        if not damage_amount.isdigit():
+            _, _, damage_amount = dice.show_roll(damage_amount)
+        initiative.damage_entity(initiative.get_entity(name), int(damage_amount))
 def command_heal(initiative, components):
     if len(components) == 0:
-        print("Invalid input. Heal command requires a parameter.")
+        print("Invalid input. Heal command requires more parameters.")
         return
     heal_amount = "".join(components)
     if not heal_amount.isdigit():
@@ -87,7 +94,7 @@ def command_action(initiative, components):
         creature.action(components[0])
 def command_save(initiative, components):
     if len(components) == 0:
-        print("Invalid input. Save command requires more components.")
+        print("Invalid input. Save command requires more parameters.")
         return
     creature = initiative.get_current_entity()
     # Save ABILITY DC

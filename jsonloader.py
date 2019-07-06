@@ -6,12 +6,12 @@ def get_creature(requested_creature):
         data = json.load(file)
         for creature_name, creature in data.items():
             if creature_name == requested_creature:
-                print("Successfully retrieved " + creature_name + " stats from JSON.")
+                # print("Successfully retrieved " + creature_name + " stats from JSON.")
                 return creature
             try:
                 for command in creature["commands"]:
                     if command == requested_creature:
-                        print("Successfully retrieved " + creature_name + " stats from JSON.")
+                        # print("Successfully retrieved " + creature_name + " stats from JSON.")
                         return creature
             except:
                 pass
