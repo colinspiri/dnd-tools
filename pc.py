@@ -5,19 +5,7 @@ import jsonloader as loader
 
 class PC(Creature):
     def __init__(self, object):
-        self.armor_class = object["armor_class"]
-
-        # Ability scores
-        self.ability_scores = object["ability_scores"]
-        self.ability_modifiers = {}
-        for ability, score in self.ability_scores.items():
-            self.ability_modifiers[ability] = constants.ABILITY_MODIFIERS[score]
-        self.initiative_bonus = self.ability_modifiers["DEX"]
-
-        # Saving throws
-        self.saving_throws = self.ability_modifiers.copy()
-        for ability, modifier in object["saving_throws"].items():
-            self.saving_throws[ability] = modifier
+        Creature.__init__(self, object["max_health"], {}, object)
 
         # Skill proficiencies
         self.proficiency_bonus = object["proficiency_bonus"]
@@ -109,8 +97,8 @@ class PC(Creature):
                 action_name = weapon + " thrown"
                 formatted_name += ", Thrown"
                 actions[action_name] = loader.get_simple_action_dictionary(formatted_name, weapon_stats["thrown_range"], to_hit, damage, weapon_stats["damage_type"])
+        self.set_actions(actions)
 
-        Creature.__init__(self, object["name"], object["max_health"], actions)
 
     def save(self, ability, save_dc):
         save_bonus = self.saving_throws[ability]

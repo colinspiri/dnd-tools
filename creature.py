@@ -3,15 +3,39 @@ import constants
 import dice
 
 class Creature(Entity):
-    def __init__(self, name, commands, max_health, actions):
-        Entity.__init__(self, name)
+    def __init__(self, max_health, actions, object):
+        Entity.__init__(self, object["name"])
+        try:
+            commands = object["commands"]
+        except:
+            commands = []
         self.commands = commands
-        
+
         self.max_health = max_health
         self.current_health = self.max_health
 
+        self.armor_class = object["armor_class"]
+
+        # Ability scores
+        self.ability_scores = object["ability_scores"]
+        self.ability_modifiers = {}
+        for ability, score in self.ability_scores.items():
+            self.ability_modifiers[ability] = constants.ABILITY_MODIFIERS[score]
+
+        # Saving throws
+        self.saving_throws = self.ability_modifiers.copy()
+        for ability, modifier in object["saving_throws"].items():
+            self.saving_throws[ability] = modifier
+
         self.actions = actions
 
+    def save(self, ability, save_dc):
+        save_bonus = self.saving_throws[ability]
+        save_success, saving_throw = dice.show_save(str(save_bonus), save_dc)
+        return save_success, saving_throw
+
+    def set_actions(self, actions):
+        self.actions = actions
     def show_actions(self):
         print(self.name + " has actions " + str(list(self.actions.keys())))
     def action(self, requested_action):

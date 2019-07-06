@@ -140,7 +140,6 @@ def input_initiative():
                 except:
                     new_entity_instance = Entity(name.capitalize())
                 new_entity_instance.name += str(i + 1)
-                print(new_entity_instance.commands)
                 initiative.add_entity(new_entity_instance, initiative_result)
         else:
             initiative.add_entity(new_entity, initiative_result)

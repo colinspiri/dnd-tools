@@ -27,6 +27,7 @@
   },
   "cha_racter": {
     "name": "Cha Racter",
+    "commands": ["cha"],
     "proficiency_bonus": 2,
     "max_health": 28,
     "armor_class": 15,
