@@ -6,6 +6,9 @@ import jsonloader as loader
 class PC(Creature):
     def __init__(self, object):
         Creature.__init__(self, object["max_health"], {}, object)
+        self.json_object = object
+
+        self.current_health = object["current_health"]
 
         # Skill proficiencies
         self.proficiency_bonus = object["proficiency_bonus"]
@@ -98,6 +101,21 @@ class PC(Creature):
                 formatted_name += ", Thrown"
                 actions[action_name] = loader.get_simple_action_dictionary(formatted_name, weapon_stats["thrown_range"], to_hit, damage, weapon_stats["damage_type"])
         self.set_actions(actions)
+
+    def take_damage(self, damage):
+        self.damage_taken += damage
+        self.current_health -= damage
+        if self.current_health <= -self.max_health:
+            print(self.name + " has dropped to " + str(self.current_health) + "/" + str(self.max_health) + " hit points, and is now dead.")
+        elif self.current_health <= 0:
+            self.current_health = 0
+            print(self.name + " has dropped to 0 hit points and is now unconscious. " + self.name + " will now make death saving throws.")
+        else:
+            if self.current_health > self.max_health:
+                self.current_health = self.max_health
+                self.damage_taken = 0
+            print(self.name + " has " + str(self.current_health) + "/" + str(self.max_health) + " hit points.")
+        self.json_object["current_health"] = self.current_health
 
 
     def save(self, ability, save_dc):

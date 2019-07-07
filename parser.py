@@ -19,7 +19,7 @@ def run_command(initiative, command, components):
     if command == "next":
         command_next(initiative)
     elif command == "end":
-        command_end()
+        command_end(initiative)
     elif command == "roll":
         command_roll(components)
     elif command == "damage":
@@ -39,7 +39,13 @@ def run_command(initiative, command, components):
 
 def command_next(initiative):
     initiative.next_turn()
-def command_end():
+def command_end(initiative):
+    pcs_to_update = []
+    for set in initiative.order:
+        if hasattr(set["entity"], "json_object"):
+            pcs_to_update.append(set["entity"])
+    if len(pcs_to_update) > 0:
+        loader.update_pcs(pcs_to_update)
     print("Program ended.")
     quit()
 def command_roll(components):

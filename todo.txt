@@ -1,7 +1,7 @@
 CURRENT COMMIT
 todo:
--clean up class inheritance structure
--add ability scores and saves to creature 
+-add commands to view and roll actions for pcs
+-add modifying hp, taking damage and healing
 
 LATER
 
@@ -17,7 +17,5 @@ todo rules lookup:
 -add rules lookup (scrape from roll20?)
 
 todo character_tracker:
--add commands to view and roll actions for pcs
--add skill checks (like saving throws)
--add modifying hp, taking damage and healing
 -track hit dice
+-add skill checks (like saving throws)

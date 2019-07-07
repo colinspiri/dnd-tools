@@ -112,7 +112,7 @@ def input_initiative():
 
         # If creature name is found in JSON, use it; otherwise, make an Entity object
         try:
-            new_entity = NPC(loader.get_creature(name))
+            new_entity = NPC(loader.get_npc(name))
         except:
             new_entity = Entity(name.capitalize())
 

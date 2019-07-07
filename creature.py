@@ -12,8 +12,6 @@ class Creature(Entity):
         self.commands = commands
 
         self.max_health = max_health
-        self.current_health = self.max_health
-
         self.armor_class = object["armor_class"]
 
         # Ability scores

@@ -1,18 +1,30 @@
 import json
 
-# retrieves creature from json file and returns it as an object
-def get_creature(requested_creature):
-    with open("creatures.json", "r") as file:
+def update_pcs(pcs):
+    data = None
+    with open("pcs.json", "r") as file:
         data = json.load(file)
-        for creature_name, creature in data.items():
-            if creature_name == requested_creature:
+        for json_pc_key, json_pc in data.items():
+            for pc in pcs:
+                if json_pc["name"] == pc.name:
+                    data[json_pc_key] = pc.json_object
+                    print("Stored all data for " + pc.name + " in JSON.")
+    with open("pcs.json", "w") as file:
+        json.dump(data, file)
+
+# retrieves npc from json file and returns it as an object
+def get_npc(requested_npc):
+    with open("npcs.json", "r") as file:
+        data = json.load(file)
+        for npc_name, npc in data.items():
+            if npc_name == requested_npc:
                 # print("Successfully retrieved " + creature_name + " stats from JSON.")
-                return creature
+                return npc
             try:
-                for command in creature["commands"]:
-                    if command == requested_creature:
+                for command in npc["commands"]:
+                    if command == requested_npc:
                         # print("Successfully retrieved " + creature_name + " stats from JSON.")
-                        return creature
+                        return npc
             except:
                 pass
 
@@ -24,7 +36,7 @@ def get_object(requested_object, file_name):
                 return object
 
 def get_pc(requested_pc):
-    return get_object(requested_pc, "playercharacters.json")
+    return get_object(requested_pc, "pcs.json")
 
 def get_weapon(requested_weapon):
     return get_object(requested_weapon, "weapons.json")
