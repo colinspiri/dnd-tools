@@ -32,6 +32,8 @@ def run_command(initiative, command, components):
         command_action(initiative, components)
     elif command == "save":
         command_save(initiative, components)
+    elif command == "check":
+        command_check(initiative, components)
     elif command == "help":
         command_help(components)
     else:
@@ -109,15 +111,36 @@ def command_save(initiative, components):
     if len(components) == 0:
         print("Invalid input. Save command requires more parameters.")
         return
-    creature = initiative.get_current_entity()
-    # Save ABILITY DC
-    try:
-        ability = components[0].upper()
+    entity = initiative.get_current_entity()
+    if not hasattr(entity, "saving_throws"):
+        print(entity.name + " cannot roll a saving throw. Did you want a d20 roll?")
+        dice.show_roll("d20")
+        return
+    ability = components[0].upper()
+    save_dc = None
+    if len(components) == 2:
         save_dc = components[1]
-        print(ability, save_dc)
-        creature.save(ability, save_dc)
+    try:
+        entity.save(ability, save_dc)
     except:
-        print(creature.name + " has no saving throw stats to use.")
+        if save_dc is None:
+            print(entity.name + " has no saving throw named \'" + ability + "\'.")
+        else:
+            print("\'" + ability + "\' and \'" + save_dc + "\' not recognized as valid input for ABILITY and SAVE DC.")
+def command_check(initiative, components):
+    if len(components) == 0:
+        print("Invalid input. Check command requires more parameters.")
+        return
+    entity = initiative.get_current_entity()
+    if not hasattr(entity, "skills"):
+        print(entity.name + " cannot roll a skill check. Did you want a d20 roll?")
+        dice.show_roll("d20")
+        return
+    skill = "_".join(components).lower()
+    try:
+        entity.skill_check(skill)
+    except:
+        print(entity.name + " has no skill or ability named \'" + skill + "\'.")
 def command_help(components):
     if len(components) == 0:
         commands = loader.get_command_names()

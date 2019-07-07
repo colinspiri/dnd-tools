@@ -17,7 +17,6 @@ class PC(Creature):
             self.skills[skill] = self.ability_modifiers[ability]
         for skill, proficiency in object["skill_proficiencies"].items():
             self.skills[skill] += proficiency * self.proficiency_bonus
-        self.passive_perception = 10 + self.skills["perception"]
 
         # Compiling actions from weapon proficiencies and weapon properties
         self.weapon_proficiencies = object["weapon_proficiencies"]
@@ -117,11 +116,9 @@ class PC(Creature):
             print(self.name + " has " + str(self.current_health) + "/" + str(self.max_health) + " hit points.")
         self.json_object["current_health"] = self.current_health
 
-
-    def save(self, ability, save_dc):
-        save_bonus = self.saving_throws[ability]
-        save_success, saving_throw = dice.show_save(str(save_bonus), save_dc)
-        return save_success, saving_throw
+    def skill_check(self, skill):
+        skill_bonus = self.skills[skill]
+        dice.show_roll(str(skill_bonus))
 
     def str_ability_scores(self):
         text = "Ability Scores: \n"

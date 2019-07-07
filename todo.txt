@@ -1,7 +1,7 @@
 CURRENT COMMIT
 todo:
--add commands to view and roll actions for pcs
--add modifying hp, taking damage and healing
+-add skill checks (like saving throws) to pcs
+-change save() so that you can not specify a DC and it rolls the save and tells you the result
 
 LATER
 
@@ -9,13 +9,14 @@ todo combat:
 -move people in initiative using numbers meaning the ranking of initiative (move NAME 1 will move it to the top of the order)
 -add passive abilities to print
 -add "adv" or "dis" after actions to specify advantage or disadvantage on d20 roll
+-add damage types and vulnerabilities/resistances/immunities
+-add skills to npcs
 
 
 todo rules lookup:
--add resistances, immunities, vulnerabilities
--add spellcasting and spell lookup
+-add spell lookup and simple damaging spells (roll either attack roll and damage, just damage, or damage and halve it)
 -add rules lookup (scrape from roll20?)
+  -conditions
 
 todo character_tracker:
 -track hit dice
--add skill checks (like saving throws)

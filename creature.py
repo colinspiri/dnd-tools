@@ -29,8 +29,12 @@ class Creature(Entity):
 
     def save(self, ability, save_dc):
         save_bonus = self.saving_throws[ability]
-        save_success, saving_throw = dice.show_save(str(save_bonus), save_dc)
-        return save_success, saving_throw
+        if save_dc is not None:
+            save_success, save_result = dice.show_save(str(save_bonus), save_dc)
+            return save_success, save_result
+        else:
+            _, _, save_result = dice.show_roll(str(save_bonus))
+            return None, save_result
 
     def set_actions(self, actions):
         self.actions = actions

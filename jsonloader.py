@@ -10,7 +10,7 @@ def update_pcs(pcs):
                     data[json_pc_key] = pc.json_object
                     print("Stored all data for " + pc.name + " in JSON.")
     with open("pcs.json", "w") as file:
-        json.dump(data, file)
+        json.dump(data, file, indent=2)
 
 # retrieves npc from json file and returns it as an object
 def get_npc(requested_npc):

@@ -100,16 +100,20 @@ def show_attack(to_hit_modifier, damage_dice, damage_type = ""):
     return to_hit_result, damage_result, critical
 
 def save(save_bonus, save_dc):
-    die_result, modifier, saving_throw = roll(save_bonus)
-    save_success = saving_throw >= int(save_dc)
-    return save_success, saving_throw
+    die_result, modifier, save_result = roll(save_bonus)
+    save_success = save_result >= int(save_dc)
+    return save_success, modifier, save_result
 def show_save(save_bonus, save_dc):
-    save_success, saving_throw = save(save_bonus, save_dc)
-    if save_success:
-        print("Save successful with " + str(saving_throw) + ".")
+    save_success, modifier, save_result = save(save_bonus, save_dc)
+    if modifier < 0:
+        print("[" + str(save_result - modifier) + "] (-" + str(abs(modifier)) + ")")
     else:
-        print("Save failed with " + str(saving_throw) + ".")
-    return save_success, saving_throw
+        print("[" + str(save_result - modifier) + "] (+" + str(modifier) + ")")
+    if save_success:
+        print("SUCCESS: " + str(save_result))
+    else:
+        print("FAILURE: " + str(save_result))
+    return save_success, save_result
 
 if __name__ == "__main__":
     while True:
