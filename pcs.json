@@ -1,7 +1,9 @@
 {
   "igor": {
     "name": "Igor",
-    "proficiency_bonus": 2,
+    "class": "wizard",
+    "level": 1,
+    "current_hit_dice": 1,
     "max_health": 6,
     "current_health": 6,
     "armor_class": 12,
@@ -36,40 +38,43 @@
       "dagger"
     ]
   },
-  "cha_racter": {
-    "name": "Cha Racter",
+  "babadook": {
+    "name": "The Babadook",
     "commands": [
-      "cha"
+      "babadook"
     ],
-    "proficiency_bonus": 2,
-    "max_health": 28,
-    "current_health": 28,
-    "armor_class": 15,
+    "class": "druid",
+    "level": 5,
+    "current_hit_dice": 1,
+    "max_health": 33,
+    "current_health": 33,
+    "armor_class": 12,
     "ability_scores": {
-      "STR": 11,
-      "DEX": 16,
-      "CON": 11,
-      "INT": 14,
+      "STR": 14,
+      "DEX": 12,
+      "CON": 13,
+      "INT": 12,
       "WIS": 16,
-      "CHA": 10
+      "CHA": 13
     },
     "saving_throws": {
-      "STR": 2,
-      "DEX": 5
+      "INT": 4,
+      "WIS": 6
     },
     "skill_proficiencies": {
+      "animal_handling": 1,
       "arcana": 1,
-      "history": 1,
-      "insight": 1,
-      "perception": 1
+      "athletics": 1,
+      "perception": 1,
+      "survival": 1
     },
     "weapon_proficiencies": [
-      "shortsword",
-      "longbow"
+      "simple"
     ],
     "weapons": [
-      "shortsword",
-      "longbow"
+      "scimitar",
+      "shortbow",
+      "greatsword"
     ]
   }
 }

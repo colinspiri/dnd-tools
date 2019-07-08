@@ -34,6 +34,8 @@ def run_command(initiative, command, components):
         command_save(initiative, components)
     elif command == "check":
         command_check(initiative, components)
+    elif command == "rest":
+        command_rest(initiative, components)
     elif command == "help":
         command_help(components)
     else:
@@ -47,7 +49,9 @@ def command_end(initiative):
         if hasattr(set["entity"], "json_object"):
             pcs_to_update.append(set["entity"])
     if len(pcs_to_update) > 0:
-        loader.update_pcs(pcs_to_update)
+        text = input("Save player character data? ").strip()
+        if text == "yes" or text == "y":
+            loader.update_pcs(pcs_to_update)
     print("Program ended.")
     quit()
 def command_roll(components):
@@ -141,6 +145,24 @@ def command_check(initiative, components):
         entity.skill_check(skill)
     except:
         print(entity.name + " has no skill or ability named \'" + skill + "\'.")
+def command_rest(initiative, components):
+    if len(components) == 0:
+        print("Invalid input. Rest command requires more parameters.")
+        return
+    entity = initiative.get_current_entity()
+    if not hasattr(entity, "current_hit_dice"):
+        print(entity.name + " cannot take a rest.")
+        return
+    # Short rest
+    if components[0] == "short":
+        print("Short resting...")
+        entity.take_short_rest()
+    # Long rest
+    elif components[0] == "long":
+        print("Long resting...")
+        entity.take_long_rest()
+    else:
+        print("\'" + components[0] + "\' not recognized as a valid rest type. Choose either \'short\' or \'long\'.")
 def command_help(components):
     if len(components) == 0:
         commands = loader.get_command_names()

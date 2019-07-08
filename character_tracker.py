@@ -10,7 +10,8 @@ print()
 print(pc)
 
 initiative = Initiative()
-initiative.add_entity(pc, 20)
+initiative.add_entity(pc, 1)
 
 while(True):
     parser.get_input(initiative)
+    print()

@@ -2,24 +2,30 @@ from creature import Creature
 import constants
 import dice
 import jsonloader as loader
+import math
 
 class PC(Creature):
     def __init__(self, object):
         Creature.__init__(self, object["max_health"], {}, object)
         self.json_object = object
 
+        self.level = object["level"]
+        self.class_ = object["class"]
+
+        self.hit_die = constants.HIT_DICE[self.class_]
+        self.current_hit_dice = object["current_hit_dice"]
         self.current_health = object["current_health"]
 
         # Skill proficiencies
-        self.proficiency_bonus = object["proficiency_bonus"]
+        proficiency_bonus = constants.PROFICIENCY_BONUSES[self.level]
         self.skills = {}
         for skill, ability in constants.SKILLS.items():
             self.skills[skill] = self.ability_modifiers[ability]
         for skill, proficiency in object["skill_proficiencies"].items():
-            self.skills[skill] += proficiency * self.proficiency_bonus
+            self.skills[skill] += proficiency * proficiency_bonus
 
         # Compiling actions from weapon proficiencies and weapon properties
-        self.weapon_proficiencies = object["weapon_proficiencies"]
+        weapon_proficiencies = object["weapon_proficiencies"]
         self.weapons = object["weapons"]
         actions = {}
         for weapon in self.weapons:
@@ -37,8 +43,8 @@ class PC(Creature):
             relevant_ability_bonus = self.ability_modifiers[relevant_ability]
             # To hit modifier
             to_hit = relevant_ability_bonus
-            if weapon in self.weapon_proficiencies or weapon_stats["type"] in self.weapon_proficiencies:
-                to_hit += self.proficiency_bonus
+            if weapon in weapon_proficiencies or weapon_stats["type"] in weapon_proficiencies:
+                to_hit += proficiency_bonus
             if to_hit > 0:
                 to_hit = "+" + str(to_hit)
             else:
@@ -105,7 +111,7 @@ class PC(Creature):
         self.damage_taken += damage
         self.current_health -= damage
         if self.current_health <= -self.max_health:
-            print(self.name + " has dropped to " + str(self.current_health) + "/" + str(self.max_health) + " hit points, and is now dead.")
+            print(self.name + " has dropped to " + str(self.current_health) + "/" + str(self.max_health) + " hit points and is now dead.")
         elif self.current_health <= 0:
             self.current_health = 0
             print(self.name + " has dropped to 0 hit points and is now unconscious. " + self.name + " will now make death saving throws.")
@@ -113,13 +119,66 @@ class PC(Creature):
             if self.current_health > self.max_health:
                 self.current_health = self.max_health
                 self.damage_taken = 0
-            print(self.name + " has " + str(self.current_health) + "/" + str(self.max_health) + " hit points.")
+            print(self.str_hit_points())
         self.json_object["current_health"] = self.current_health
 
     def skill_check(self, skill):
         skill_bonus = self.skills[skill]
         dice.show_roll(str(skill_bonus))
 
+    def take_short_rest(self):
+        # Expend hit dice
+        while True:
+            if self.current_hit_dice == 0:
+                print("You have no hit dice remaining.")
+                break
+            print(self.str_hit_dice())
+            text = input("How many do you want to expend? ").strip()
+            # Check if input is an int
+            try:
+                requested_amount = int(text)
+            except:
+                print("That's not a number.")
+                continue
+            # If 0, move on
+            if requested_amount == 0:
+                break
+            # If able to, spend hit dice
+            elif requested_amount <= self.current_hit_dice:
+                print("Regaining hit points equal to " + str(requested_amount) + self.hit_die + " + (" + str(requested_amount) + " * CON modifier).")
+                modifier = requested_amount*self.ability_modifiers["CON"]
+                to_roll = str(requested_amount) + self.hit_die + "+" + str(modifier)
+                _, _, result = dice.show_roll(to_roll)
+                self.take_damage(-1*result)
+                self.current_hit_dice -= requested_amount
+                self.json_object["current_hit_dice"] = self.current_hit_dice
+                continue
+            else:
+                print("You don't have that many hit dice remaining.")
+                continue
+        # Print abilities
+        print("You might have abilities that refresh on a short rest.")
+    def take_long_rest(self):
+        # Restore hit points
+        self.current_health = self.max_health
+        self.damage_taken = 0
+        self.json_object["current_health"] = self.current_health
+        print(self.str_hit_points())
+
+        # Restore half of max hit dice
+        restored_hit_dice = math.floor(self.level/2)
+        if restored_hit_dice < 1:
+            restored_hit_dice = 1
+        elif self.current_hit_dice + restored_hit_dice > self.level:
+            restored_hit_dice = self.level - self.current_hit_dice
+        self.current_hit_dice += restored_hit_dice
+        self.json_object["current_hit_dice"] = self.current_hit_dice
+        print("Regained " + str(restored_hit_dice) + " hit dice. " + self.str_hit_dice())
+
+    def str_hit_points(self):
+        return self.name + " has " + str(self.current_health) + "/" + str(self.max_health) + " hit points."
+    def str_hit_dice(self):
+        return "Your remaining hit dice is " + str(self.current_hit_dice) + self.hit_die + "."
     def str_ability_scores(self):
         text = "Ability Scores: \n"
         for ability, score in self.ability_scores.items():
@@ -140,6 +199,7 @@ class PC(Creature):
 
     def __str__(self):
         text = self.name + "\n"
+        text += self.class_.capitalize() + " (" + str(self.level) + ")\n"
         text += "HP: " + str(self.current_health) + "/" + str(self.max_health) + "\n"
         text += "AC: " + str(self.armor_class) + "\n"
         text += self.str_ability_scores()
