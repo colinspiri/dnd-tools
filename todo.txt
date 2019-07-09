@@ -1,10 +1,7 @@
 CURRENT COMMIT
 todo:
--add levels and classes (no multiclassing)
--track hit dice
--command rest [short/long]
-  -on short rest, prompt to expend hit dice
-  -on long rest, restore half of max hit dice and restore current hit points to max
+-add class features and add to character based on level of pc - DONE
+-during rests, search through extra features for the words "short rest" or "long rest" and print any matches
 
 LATER
 
@@ -13,6 +10,11 @@ general:
 -instead of using take_damage(-1*amount), separate some code into heal() function
 -for PC, make set_hit_points() function to set current hit points and save it to json object
 -rename "object" in constructors to "json_object"
+-update commands.json
+
+new idea:
+-what can players do at certain levels???
+  -enter player classes and levels and output cool things the PCs can do (speak with dead, speak with plants, ask their god a question, etc.)
 
 combat:
 -move people in initiative using numbers meaning the ranking of initiative (move NAME 1 will move it to the top of the order)
@@ -22,13 +24,24 @@ combat:
 -add skills to npcs (manual input, no proficiency bonus)
 -use 'select' command to select an entity in the initiative order to execute a command on; with this, every command takes as a parameter not initiative, but just one entity and gets executed on the entity given
 
-
 rules lookup:
 -add spell lookup and simple damaging spells (roll either attack roll and damage, just damage, or damage and halve it)
+  "spell_name": {
+  "text": "DESCRIPTION OF SPELL AND INSTRUCTIONS",
+  "to_roll": ["spell_attack_roll", "damage", "damage_halved"]
+  }
 -add rules lookup (scrape from roll20?)
   -conditions
   -command "lookup SOMETHING"
 
 character_tracker:
--during rests, search through extra features for the words "short rest" or "long rest" and print any matches
--add class features and add to character based on level of pc
+-how to display long features with a lot of text (like Wild Shape)?
+-how to organize subclasses - Arcane Traditions, Druid Circles, etc.?
+-how to handle ability score improvements?
+-add leveling up
+  -roll for new hit points
+  -re-load pc to get new prof_bonus and class features
+-add "see" command to see anything about character (hit points, actions, weapons, features)
+-add equipment - dict with detailed info on the items
+  -add items.json to track how much things cost, weigh, and their descriptions
+  -track total weight compared to carrying capacity

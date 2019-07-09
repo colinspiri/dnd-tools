@@ -12,32 +12,35 @@ def update_pcs(pcs):
     with open("pcs.json", "w") as file:
         json.dump(data, file, indent=2)
 
-# retrieves npc from json file and returns it as an object
+def get_class_features(requested_class, max_level):
+    with open("classes.json", "r") as file:
+        data = json.load(file)
+        features = {}
+        for i in range(max_level):
+            for feature_name, feature in data[requested_class]["features"][i].items():
+                features[feature_name] = feature
+        return features
+
 def get_npc(requested_npc):
     with open("npcs.json", "r") as file:
         data = json.load(file)
         for npc_name, npc in data.items():
             if npc_name == requested_npc:
-                # print("Successfully retrieved " + creature_name + " stats from JSON.")
                 return npc
             try:
                 for command in npc["commands"]:
                     if command == requested_npc:
-                        # print("Successfully retrieved " + creature_name + " stats from JSON.")
                         return npc
             except:
                 pass
-
 def get_object(requested_object, file_name):
     with open(file_name, "r") as file:
         data = json.load(file)
         for object_name, object in data.items():
             if object_name == requested_object:
                 return object
-
 def get_pc(requested_pc):
     return get_object(requested_pc, "pcs.json")
-
 def get_weapon(requested_weapon):
     return get_object(requested_weapon, "weapons.json")
 

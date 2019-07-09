@@ -89,7 +89,6 @@ class Creature(Entity):
         text = "Actions: \n"
         for action_name in self.actions.keys():
             text += self.str_action_long(action_name)
-        text += "\n"
         return text
     def str_action_long(self, action_name):
         action = self.actions[action_name]

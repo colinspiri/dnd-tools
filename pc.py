@@ -24,6 +24,8 @@ class PC(Creature):
         for skill, proficiency in object["skill_proficiencies"].items():
             self.skills[skill] += proficiency * proficiency_bonus
 
+        self.features = loader.get_class_features(self.class_, self.level)
+
         # Compiling actions from weapon proficiencies and weapon properties
         weapon_proficiencies = object["weapon_proficiencies"]
         self.weapons = object["weapons"]
@@ -157,7 +159,14 @@ class PC(Creature):
                 print("You don't have that many hit dice remaining.")
                 continue
         # Print abilities
-        print("You might have abilities that refresh on a short rest.")
+        print("You might have features that refresh on a short rest.")
+        first_feature_printed = False
+        for feature_name, feature in self.features.items():
+            if "short rest" in feature or "short or long rest" in feature:
+                if not first_feature_printed:
+                    print("Here are some such features:")
+                print(feature_name + ": " + feature)
+
     def take_long_rest(self):
         # Restore hit points
         self.current_health = self.max_health
@@ -174,6 +183,15 @@ class PC(Creature):
         self.current_hit_dice += restored_hit_dice
         self.json_object["current_hit_dice"] = self.current_hit_dice
         print("Regained " + str(restored_hit_dice) + " hit dice. " + self.str_hit_dice())
+
+        # Print abilities
+        print("You might have features that refresh on a long rest.")
+        first_feature_printed = False
+        for feature_name, feature in self.features.items():
+            if "long rest" in feature or "short or long rest" in feature:
+                if not first_feature_printed:
+                    print("Here are some such features:")
+                print(feature_name + ": " + feature)
 
     def str_hit_points(self):
         return self.name + " has " + str(self.current_health) + "/" + str(self.max_health) + " hit points."
@@ -196,6 +214,11 @@ class PC(Creature):
                 text += ", "
         text += "\n"
         return text
+    def str_features(self):
+        text = "Features:\n"
+        for feature_name, feature in self.features.items():
+            text += feature_name + ": " + feature + "\n\n"
+        return text
 
     def __str__(self):
         text = self.name + "\n"
@@ -205,6 +228,7 @@ class PC(Creature):
         text += self.str_ability_scores()
         text += self.str_weapons()
         text += self.str_actions()
+        text += self.str_features()
 
         return text + "\n"
 
