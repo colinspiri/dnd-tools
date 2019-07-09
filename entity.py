@@ -7,12 +7,16 @@ class Entity:
 
     def take_damage(self, damage):
         self.damage_taken += damage
-        if hasattr(self, 'current_health'):
-            self.current_health -= damage
-            if self.current_health <= 0:
-                print(self.name + " has dropped to " + str(self.current_health) + " hit points. Use the 'remove' command to consider them dead.")
-            elif self.current_health > self.max_health:
-                self.current_health = self.max_health
+        if hasattr(self, 'current_hit_points'):
+            self.current_hit_points -= damage
+            if self.current_hit_points <= 0:
+                print(self.name + " has dropped to " + str(self.current_hit_points) + " hit points. Use the 'remove' command to consider them dead.")
+    def heal(self, damage):
+        self.damage_taken -= damage
+        if hasattr(self, "current_hit_points"):
+            self.current_hit_points += damage
+            if self.current_hit_points > self.max_hit_points:
+                self.current_hit_points = self.max_hit_points
                 self.damage_taken = 0
 
     def __str__(self):

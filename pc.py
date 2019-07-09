@@ -5,30 +5,30 @@ import jsonloader as loader
 import math
 
 class PC(Creature):
-    def __init__(self, object):
-        Creature.__init__(self, object["max_health"], {}, object)
-        self.json_object = object
+    def __init__(self, json_object):
+        Creature.__init__(self, json_object["max_hit_points"], {}, json_object)
+        self.json_object = json_object
 
-        self.level = object["level"]
-        self.class_ = object["class"]
+        self.level = json_object["level"]
+        self.class_ = json_object["class"]
 
         self.hit_die = constants.HIT_DICE[self.class_]
-        self.current_hit_dice = object["current_hit_dice"]
-        self.current_health = object["current_health"]
+        self.current_hit_dice = json_object["current_hit_dice"]
+        self.current_hit_points = json_object["current_hit_points"]
 
         # Skill proficiencies
         proficiency_bonus = constants.PROFICIENCY_BONUSES[self.level]
         self.skills = {}
         for skill, ability in constants.SKILLS.items():
             self.skills[skill] = self.ability_modifiers[ability]
-        for skill, proficiency in object["skill_proficiencies"].items():
+        for skill, proficiency in json_object["skill_proficiencies"].items():
             self.skills[skill] += proficiency * proficiency_bonus
 
         self.features = loader.get_class_features(self.class_, self.level)
 
         # Compiling actions from weapon proficiencies and weapon properties
-        weapon_proficiencies = object["weapon_proficiencies"]
-        self.weapons = object["weapons"]
+        weapon_proficiencies = json_object["weapon_proficiencies"]
+        self.weapons = json_object["weapons"]
         actions = {}
         for weapon in self.weapons:
             weapon_stats = loader.get_weapon(weapon)
@@ -109,20 +109,28 @@ class PC(Creature):
                 actions[action_name] = loader.get_simple_action_dictionary(formatted_name, weapon_stats["thrown_range"], to_hit, damage, weapon_stats["damage_type"])
         self.set_actions(actions)
 
-    def take_damage(self, damage):
-        self.damage_taken += damage
-        self.current_health -= damage
-        if self.current_health <= -self.max_health:
-            print(self.name + " has dropped to " + str(self.current_health) + "/" + str(self.max_health) + " hit points and is now dead.")
-        elif self.current_health <= 0:
-            self.current_health = 0
+    def take_damage(self, amount):
+        self.damage_taken += amount
+        self.change_hit_points(-amount)
+        # Print hit point information
+        if self.current_hit_points <= -self.max_hit_points:
+            print(self.name + " has dropped to " + str(self.current_hit_points) + "/" + str(self.max_hit_points) + " hit points and is now dead.")
+        elif self.current_hit_points == 0:
             print(self.name + " has dropped to 0 hit points and is now unconscious. " + self.name + " will now make death saving throws.")
         else:
-            if self.current_health > self.max_health:
-                self.current_health = self.max_health
-                self.damage_taken = 0
             print(self.str_hit_points())
-        self.json_object["current_health"] = self.current_health
+    def heal(self, amount):
+        self.damage_taken -= amount
+        self.change_hit_points(amount)
+        print(self.str_hit_points())
+    def change_hit_points(self, change):
+        self.current_hit_points += change
+        if self.current_hit_points > self.max_hit_points:
+            self.current_hit_points = self.max_hit_points
+            self.damage_taken = 0
+        elif self.current_hit_points < 0:
+            self.current_hit_points = 0
+        self.json_object["current_hit_points"] = self.current_hit_points
 
     def skill_check(self, skill):
         skill_bonus = self.skills[skill]
@@ -166,12 +174,11 @@ class PC(Creature):
                 if not first_feature_printed:
                     print("Here are some such features:")
                 print(feature_name + ": " + feature)
-
     def take_long_rest(self):
         # Restore hit points
-        self.current_health = self.max_health
+        self.current_hit_points = self.max_hit_points
         self.damage_taken = 0
-        self.json_object["current_health"] = self.current_health
+        self.json_object["current_hit_points"] = self.current_hit_points
         print(self.str_hit_points())
 
         # Restore half of max hit dice
@@ -194,7 +201,7 @@ class PC(Creature):
                 print(feature_name + ": " + feature)
 
     def str_hit_points(self):
-        return self.name + " has " + str(self.current_health) + "/" + str(self.max_health) + " hit points."
+        return self.name + " has " + str(self.current_hit_points) + "/" + str(self.max_hit_points) + " hit points."
     def str_hit_dice(self):
         return "Your remaining hit dice is " + str(self.current_hit_dice) + self.hit_die + "."
     def str_ability_scores(self):
@@ -223,7 +230,7 @@ class PC(Creature):
     def __str__(self):
         text = self.name + "\n"
         text += self.class_.capitalize() + " (" + str(self.level) + ")\n"
-        text += "HP: " + str(self.current_health) + "/" + str(self.max_health) + "\n"
+        text += "HP: " + str(self.current_hit_points) + "/" + str(self.max_hit_points) + "\n"
         text += "AC: " + str(self.armor_class) + "\n"
         text += self.str_ability_scores()
         text += self.str_weapons()

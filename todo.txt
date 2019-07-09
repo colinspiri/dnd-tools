@@ -1,16 +1,14 @@
 CURRENT COMMIT
 todo:
--add class features and add to character based on level of pc - DONE
--during rests, search through extra features for the words "short rest" or "long rest" and print any matches
+-change "health" to "hit points" everywhere in code - DONE
+-instead of using take_damage(-1*amount), separate some code into heal() function - DONE
+-for PC, make set_hit_points() function to set current hit points and save it to json object - DONE
+-update commands.json - DONE
+-rename "object" in constructors to "json_object" - DONE
 
 LATER
 
 general:
--change "health" to "hit points" everywhere in code
--instead of using take_damage(-1*amount), separate some code into heal() function
--for PC, make set_hit_points() function to set current hit points and save it to json object
--rename "object" in constructors to "json_object"
--update commands.json
 
 new idea:
 -what can players do at certain levels???

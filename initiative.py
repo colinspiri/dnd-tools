@@ -79,7 +79,7 @@ class Initiative:
         if entity.damage_taken > 0:
             print(str(entity.damage_taken) + " damage taken.")
         try:
-            print("Health: " + str(entity.current_health) + "/" + str(entity.max_health))
+            print("Hit Points: " + str(entity.current_hit_points) + "/" + str(entity.max_hit_points))
         except:
             pass
     def show_round(self):

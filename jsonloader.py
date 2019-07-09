@@ -33,16 +33,16 @@ def get_npc(requested_npc):
                         return npc
             except:
                 pass
-def get_object(requested_object, file_name):
+def get_json_object(requested_json_object, file_name):
     with open(file_name, "r") as file:
         data = json.load(file)
-        for object_name, object in data.items():
-            if object_name == requested_object:
-                return object
+        for json_object_name, json_object in data.items():
+            if json_object_name == requested_json_object:
+                return json_object
 def get_pc(requested_pc):
-    return get_object(requested_pc, "pcs.json")
+    return get_json_object(requested_pc, "pcs.json")
 def get_weapon(requested_weapon):
-    return get_object(requested_weapon, "weapons.json")
+    return get_json_object(requested_weapon, "weapons.json")
 
 def get_command_names():
     with open("commands.json", "r") as file:
@@ -52,7 +52,7 @@ def get_command_names():
             command_names.append(command_name)
         return command_names
 def get_command_description(requested_command):
-    return get_object(requested_command, "commands.json")
+    return get_json_object(requested_command, "commands.json")
 
 def get_simple_action_dictionary(name, range, to_hit, damage_dice, damage_type):
     return {

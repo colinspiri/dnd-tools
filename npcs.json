@@ -1,8 +1,8 @@
 {
   "druid": {
     "name": "Druid",
-    "max_health": "5d8+5",
-    "max_health_average": 27,
+    "max_hit_points": "5d8+5",
+    "max_hit_points_average": 27,
     "armor_class": 11,
     "ability_scores": {
       "STR": 10,
@@ -31,8 +31,8 @@
   },
   "wolf": {
     "name": "Wolf",
-    "max_health": "2d8+2",
-    "max_health_average": 11,
+    "max_hit_points": "2d8+2",
+    "max_hit_points_average": 11,
     "armor_class": 13,
     "ability_scores": {
       "STR": 12,
@@ -62,8 +62,8 @@
   },
   "zombie": {
     "name": "Zombie",
-    "max_health": "3d8+9",
-    "max_health_average": 22,
+    "max_hit_points": "3d8+9",
+    "max_hit_points_average": 22,
     "armor_class": 8,
     "ability_scores": {
       "STR": 13,
@@ -94,8 +94,8 @@
   "werewolf": {
     "commands": ["werew"],
     "name": "Werewolf",
-    "max_health": "9d8+18",
-    "max_health_average": 58,
+    "max_hit_points": "9d8+18",
+    "max_hit_points_average": 58,
     "armor_class": 12,
     "ability_scores": {
       "STR": 15,
@@ -164,8 +164,8 @@
   "vampire_spawn": {
     "commands": ["vampspawn", "vamps", "vampire spawn"],
     "name": "Vampire Spawn",
-    "max_health": "11d8+33",
-    "max_health_average": 82,
+    "max_hit_points": "11d8+33",
+    "max_hit_points_average": 82,
     "armor_class": 15,
     "ability_scores": {
       "STR": 16,
@@ -215,8 +215,8 @@
   },
   "strahd": {
     "name": "Strahd von Zarovich",
-    "max_health": "17d8+68",
-    "max_health_average": 144,
+    "max_hit_points": "17d8+68",
+    "max_hit_points_average": 144,
     "armor_class": 16,
     "ability_scores": {
       "STR": 18,
@@ -273,8 +273,8 @@
   "troglodyte": {
     "commands": ["trog", "tgdyte"],
     "name": "Troglodyte",
-    "max_health": "2d8+4",
-    "max_health_average": 13,
+    "max_hit_points": "2d8+4",
+    "max_hit_points_average": 13,
     "armor_class": 11,
     "ability_scores": {
       "STR": 14,
@@ -315,8 +315,8 @@
   },
   "cultist": {
     "name": "Cultist",
-    "max_health": "2d8",
-    "max_health_average": 9,
+    "max_hit_points": "2d8",
+    "max_hit_points_average": 9,
     "armor_class": 12,
     "ability_scores": {
       "STR": 11,

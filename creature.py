@@ -3,26 +3,26 @@ import constants
 import dice
 
 class Creature(Entity):
-    def __init__(self, max_health, actions, object):
-        Entity.__init__(self, object["name"])
+    def __init__(self, max_hit_points, actions, json_object):
+        Entity.__init__(self, json_object["name"])
         try:
-            commands = object["commands"]
+            commands = json_object["commands"]
         except:
             commands = []
         self.commands = commands
 
-        self.max_health = max_health
-        self.armor_class = object["armor_class"]
+        self.max_hit_points = max_hit_points
+        self.armor_class = json_object["armor_class"]
 
         # Ability scores
-        self.ability_scores = object["ability_scores"]
+        self.ability_scores = json_object["ability_scores"]
         self.ability_modifiers = {}
         for ability, score in self.ability_scores.items():
             self.ability_modifiers[ability] = constants.ABILITY_MODIFIERS[score]
 
         # Saving throws
         self.saving_throws = self.ability_modifiers.copy()
-        for ability, modifier in object["saving_throws"].items():
+        for ability, modifier in json_object["saving_throws"].items():
             self.saving_throws[ability] = modifier
 
         self.actions = actions
@@ -113,4 +113,4 @@ class Creature(Entity):
         text += "\n"
         return text
     def __str__(self):
-        return self.name + " has " + str(self.current_health) + "/" + str(self.max_health) + " health."
+        return self.name + " has " + str(self.current_hit_points) + "/" + str(self.max_hit_points) + " hit points."
