@@ -58,13 +58,20 @@ def command_roll(components):
     if len(components) == 0:
         print("Invalid input. Roll command requires more parameters.")
         return
+    # Parse for advantage
+    advantage = 0
+    if len(components) >= 4:
+        if components[3] == "adv" or components[3] == "advantage":
+            advantage = 1
+        elif components[3] == "dis" or components[3] == "disadvantage":
+            advantage = -1
     # Roll attack
-    elif components[0] == "attack":
-        dice.show_attack(components[1], components[2])
+    if components[0] == "attack":
+        dice.show_attack(int(components[1]), components[2], advantage = advantage)
     # Roll save
     elif components[0] == "save":
-        dice.show_save(components[1], components[2])
-    # Roll DICE
+        dice.show_save(int(components[1]), components[2], advantage = advantage)
+    # Roll standard dice
     else:
         dice.show_roll("".join(components))
 def command_damage(initiative, components):
@@ -125,7 +132,7 @@ def command_save(initiative, components):
     if len(components) == 2:
         save_dc = components[1]
     try:
-        entity.save(ability, save_dc)
+        entity.make_save(ability, save_dc)
     except:
         if save_dc is None:
             print(entity.name + " has no saving throw named \'" + ability + "\'.")

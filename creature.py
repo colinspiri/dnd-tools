@@ -27,14 +27,13 @@ class Creature(Entity):
 
         self.actions = actions
 
-    def save(self, ability, save_dc):
+    def make_save(self, ability, save_dc):
         save_bonus = self.saving_throws[ability]
         if save_dc is not None:
-            save_success, save_result = dice.show_save(str(save_bonus), save_dc)
-            return save_success, save_result
+            print("Save Bonus: " + dice.stringify_modifier(save_bonus))
+            dice.show_save(str(save_bonus), save_dc)
         else:
-            _, _, save_result = dice.show_roll(str(save_bonus))
-            return None, save_result
+            dice.show_roll(str(save_bonus))
 
     def set_actions(self, actions):
         self.actions = actions
@@ -70,7 +69,7 @@ class Creature(Entity):
         print(summary)
 
         # Show attack with basic damage
-        critical = dice.show_attack(to_hit, basic_damage_dice, basic_damage_type)[2]
+        critical = dice.show_attack(to_hit, basic_damage_dice, basic_damage_type)
 
         # If critical failure, don't show extra damage
         if critical == False:

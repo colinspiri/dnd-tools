@@ -1,10 +1,15 @@
 CURRENT COMMIT
 todo:
--change "health" to "hit points" everywhere in code - DONE
--instead of using take_damage(-1*amount), separate some code into heal() function - DONE
--for PC, make set_hit_points() function to set current hit points and save it to json object - DONE
--update commands.json - DONE
--rename "object" in constructors to "json_object" - DONE
+-add "adv" or "dis" after actions to specify advantage or disadvantage on d20 roll
+-print damage dice on show_attack()
+-show work on creature.save()
+-write dice.stringify_modifier()
+-clean up dice.py code
+  -merge regular methods with show_ methods
+  -inputs not given as outputs
+  -only minimal outputs - see what's being used in code
+  -show_attack()
+  -show_save()
 
 LATER
 
@@ -16,9 +21,13 @@ new idea:
 
 combat:
 -move people in initiative using numbers meaning the ranking of initiative (move NAME 1 will move it to the top of the order)
--add passive abilities to print
--add "adv" or "dis" after actions to specify advantage or disadvantage on d20 roll
+-add passive abilities to print for NPCs
 -add damage types and vulnerabilities/resistances/immunities
+  -make class for Damage
+  damage: {
+    amount: NUM,
+    type: "TYPE"
+  }
 -add skills to npcs (manual input, no proficiency bonus)
 -use 'select' command to select an entity in the initiative order to execute a command on; with this, every command takes as a parameter not initiative, but just one entity and gets executed on the entity given
 
