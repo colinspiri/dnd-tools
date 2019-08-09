@@ -106,6 +106,9 @@ def show_attack(to_hit_modifier, damage_dice, damage_type = "", advantage = 0):
     if to_hit_roll == 1:
         print("CRITICAL FAILURE! MISSED ENTIRELY.")
         damage_result = 0
+    elif damage_dice == None:
+        if to_hit_roll == 20:
+            print("CRITICAL HIT!")
     else:
         # Damage
         damage_rolls, _, damage_result = roll(damage_dice)

@@ -342,5 +342,152 @@
         ]
       }
     }
+  },
+  "dire_wolf": {
+    "commands": ["direw", "direwolf"],
+    "name": "Dire Wolf",
+    "max_hit_points": "5d10+10",
+    "max_hit_points_average": 37,
+    "armor_class": 14,
+    "ability_scores": {
+      "STR": 17,
+      "DEX": 15,
+      "CON": 15,
+      "INT": 3,
+      "WIS": 12,
+      "CHA": 7
+    },
+    "saving_throws": {
+    },
+    "actions": {
+      "bite": {
+        "range": "melee",
+        "to_hit": "+5",
+        "damage": [
+          {
+            "damage_dice": "2d6+3",
+            "damage_type": "piercing"
+          }
+        ],
+        "effects": [
+          "The target must succeed on a DC 13 STR saving throw or be knocked prone."
+        ]
+      }
+    }
+  },
+  "crocodile": {
+    "commands": ["croc"],
+    "name": "Crocodile",
+    "max_hit_points": "3d10+3",
+    "max_hit_points_average": 19,
+    "armor_class": 12,
+    "ability_scores": {
+      "STR": 15,
+      "DEX": 10,
+      "CON": 13,
+      "INT": 2,
+      "WIS": 10,
+      "CHA": 5
+    },
+    "saving_throws": {
+    },
+    "actions": {
+      "bite": {
+        "range": "melee",
+        "to_hit": "+4",
+        "damage": [
+          {
+            "damage_dice": "1d10+2",
+            "damage_type": "piercing"
+          }
+        ],
+        "effects": [
+          "The target is grappled (escape DC 12). Until this grapple ends, the target is restrained and the crocodile can't bite another target."
+        ]
+      }
+    }
+  },
+  "guard_drake": {
+    "commands": ["gdrake", "guardd", "guarddrake"],
+    "name": "Guard Drake",
+    "max_hit_points": "7d8+21",
+    "max_hit_points_average": 52,
+    "armor_class": 14,
+    "ability_scores": {
+      "STR": 16,
+      "DEX": 11,
+      "CON": 16,
+      "INT": 4,
+      "WIS": 10,
+      "CHA": 7
+    },
+    "saving_throws": {
+    },
+    "actions": {
+      "bite": {
+        "range": "melee",
+        "to_hit": "+5",
+        "damage": [
+          {
+            "damage_dice": "1d8+3",
+            "damage_type": "piercing"
+          }
+        ]
+      },
+      "tail": {
+        "range": "melee",
+        "to_hit": "+5",
+        "damage": [
+          {
+            "damage_dice": "1d6+3",
+            "damage_type": "bludgeoning"
+          }
+        ]
+      }
+    }
+  },
+  "giant_spider": {
+    "commands": ["giantspider", "giantspi"],
+    "name": "Giant Spider",
+    "max_hit_points": "4d10+4",
+    "max_hit_points_average": 26,
+    "armor_class": 14,
+    "ability_scores": {
+      "STR": 14,
+      "DEX": 16,
+      "CON": 12,
+      "INT": 2,
+      "WIS": 11,
+      "CHA": 4
+    },
+    "saving_throws": {
+    },
+    "actions": {
+      "bite": {
+        "range": "melee",
+        "to_hit": "+5",
+        "damage": [
+          {
+            "damage_dice": "1d8+3",
+            "damage_type": "piercing"
+          },
+          {
+            "damage_dice": "2d8",
+            "damage_type": "poison"
+          }
+        ],
+        "effects": [
+          "The target must make a DC 11 CON saving throw, taking the above poison damage on a failed save or half as much on a successful save.",
+          "If the poison damage reduces the target to 0 hit points, the target is stable but poisoned for 1 hour, even after regaining hit points, and is paralyzed while poisoned in this way."
+        ]
+      },
+      "web": {
+        "range": "30/60",
+        "to_hit": "+5",
+        "effects": [
+          "The target is restrained by webbing. As an action, the restrained target can make a DC 12 STR check, bursting the webbing on a success. The webbing can also be attacked and destroyed (AC 10; hp 5; vulnerability to fire damage, immunity to bludgeoning, poison, and psychic damage)."
+        ]
+      }
+    }
   }
 }

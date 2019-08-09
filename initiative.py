@@ -113,6 +113,7 @@ def input_initiative():
         # If creature name is found in JSON, use it; otherwise, make an Entity object
         try:
             new_entity = NPC(loader.get_npc(name))
+            print("Got " + new_entity.name + " stats from JSON.")
         except:
             new_entity = Entity(name.capitalize())
 
@@ -130,17 +131,18 @@ def input_initiative():
                 pass
             print("Rolled " + str(initiative_result) + " for initiative.")
 
-        # Add it to the order
+        # If count is nonzero
         if words[0].isdigit():
             for i in range(entity_count):
                 try:
-                    new_entity_instance = NPC(loader.get_creature(name))
+                    new_entity_instance = NPC(loader.get_npc(name))
                     for c in range(len(new_entity_instance.commands)):
                         new_entity_instance.commands[c] += str(i + 1)
                 except:
                     new_entity_instance = Entity(name.capitalize())
                 new_entity_instance.name += str(i + 1)
                 initiative.add_entity(new_entity_instance, initiative_result)
+        # Otherwise, just add it to the order
         else:
             initiative.add_entity(new_entity, initiative_result)
     return initiative

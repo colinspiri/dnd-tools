@@ -89,6 +89,7 @@ def command_damage(initiative, components):
         if not damage_amount.isdigit():
             _, _, damage_amount = dice.show_roll(damage_amount)
         initiative.damage_entity(initiative.get_entity(name), int(damage_amount))
+        print(initiative.get_entity(name))
 def command_heal(initiative, components):
     if len(components) == 0:
         print("Invalid input. Heal command requires more parameters.")

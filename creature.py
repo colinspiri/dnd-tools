@@ -57,28 +57,38 @@ class Creature(Entity):
     def execute_action(self, action):
         # Get to hit and damage amounts
         to_hit = action["to_hit"]
-        damages = action["damage"]
-        basic_damage_dice = damages[0]["damage_dice"]
-        basic_damage_type = damages[0]["damage_type"]
+        try:
+            damages = action["damage"]
+            basic_damage_dice = damages[0]["damage_dice"]
+            basic_damage_type = damages[0]["damage_type"]
+        except:
+            damages = None
 
         # Show summary of action
-        summary = self.name + " attacks at a range of " + action["range"] + " with " + to_hit + " to hit and deals " + basic_damage_dice + " " + basic_damage_type + " damage"
-        for i in range(1, len(damages)):
-            summary += " and " + damages[i]["damage_dice"] + " " + damages[i]["damage_type"] + " damage"
-        summary += "."
+        summary = self.name + " attacks at a range of " + action["range"] + " with " + to_hit + " to hit and deals "
+        if damages == None:
+            summary += "no damage."
+        else:
+            summary += basic_damage_dice + " " + basic_damage_type + " damage"
+            for i in range(1, len(damages)):
+                summary += " and " + damages[i]["damage_dice"] + " " + damages[i]["damage_type"] + " damage"
+            summary += "."
         print(summary)
 
-        # Show attack with basic damage
-        critical = dice.show_attack(to_hit, basic_damage_dice, basic_damage_type)
+        if damages == None:
+            dice.show_attack(to_hit, None, None)
+        else:
+            # Show attack with basic damage
+            critical = dice.show_attack(to_hit, basic_damage_dice, basic_damage_type)
 
-        # If critical failure, don't show extra damage
-        if critical == False:
-            return
-        # If more damage in array, show bonus damage
-        for i in range(1, len(damages)):
-            damage_tuple = dice.roll(damages[i]["damage_dice"])
-            damage_result = damage_tuple[2]
-            print("Bonus Damage: " + str(damage_result) + " (" + damages[i]["damage_type"] + ")")
+            # If critical failure, don't show extra damage
+            if critical == False:
+                return
+            # If more damage in array, show bonus damage
+            for i in range(1, len(damages)):
+                damage_tuple = dice.roll(damages[i]["damage_dice"])
+                damage_result = damage_tuple[2]
+                print("Bonus Damage: " + str(damage_result) + " (" + damages[i]["damage_type"] + ")")
         # Show effects
         for i in range(len(action["effects"])):
             print("-" + action["effects"][i])
