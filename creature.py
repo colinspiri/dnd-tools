@@ -90,8 +90,11 @@ class Creature(Entity):
                 damage_result = damage_tuple[2]
                 print("Bonus Damage: " + str(damage_result) + " (" + damages[i]["damage_type"] + ")")
         # Show effects
-        for i in range(len(action["effects"])):
-            print("-" + action["effects"][i])
+        try:
+            for i in range(len(action["effects"])):
+                print("-" + action["effects"][i])
+        except:
+            pass
         return
 
     def str_actions(self):

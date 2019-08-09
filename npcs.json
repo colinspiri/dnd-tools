@@ -23,8 +23,6 @@
             "damage_dice": "1d6",
             "damage_type": "bludgeoning"
           }
-        ],
-        "effects": [
         ]
       }
     }
@@ -85,8 +83,6 @@
             "damage_dice": "1d6+1",
             "damage_type": "bludgeoning"
           }
-        ],
-        "effects": [
         ]
       }
     }
@@ -129,8 +125,6 @@
             "damage_dice": "2d4+2",
             "damage_type": "slashing"
           }
-        ],
-        "effects": [
         ]
       },
       "spear_strong": {
@@ -142,8 +136,6 @@
             "damage_dice": "1d8+2",
             "damage_type": "piercing"
           }
-        ],
-        "effects": [
         ]
       },
       "spear_light": {
@@ -155,8 +147,6 @@
             "damage_dice": "1d6+2",
             "damage_type": "piercing"
           }
-        ],
-        "effects": [
         ]
       }
     }
@@ -295,8 +285,6 @@
             "damage_dice": "1d4+2",
             "damage_type": "piercing"
           }
-        ],
-        "effects": [
         ]
       },
       "claw": {
@@ -307,8 +295,6 @@
             "damage_dice": "1d4+2",
             "damage_type": "slashing"
           }
-        ],
-        "effects": [
         ]
       }
     }
@@ -337,8 +323,6 @@
             "damage_dice": "1d6+1",
             "damage_type": "slashing"
           }
-        ],
-        "effects": [
         ]
       }
     }
@@ -486,6 +470,122 @@
         "to_hit": "+5",
         "effects": [
           "The target is restrained by webbing. As an action, the restrained target can make a DC 12 STR check, bursting the webbing on a success. The webbing can also be attacked and destroyed (AC 10; hp 5; vulnerability to fire damage, immunity to bludgeoning, poison, and psychic damage)."
+        ]
+      }
+    }
+  },
+  "lizardfolk": {
+    "commands": ["lizardf"],
+    "name": "Lizardfolk",
+    "max_hit_points": "4d8+4",
+    "max_hit_points_average": 22,
+    "armor_class": 15,
+    "ability_scores": {
+      "STR": 15,
+      "DEX": 10,
+      "CON": 13,
+      "INT": 7,
+      "WIS": 12,
+      "CHA": 7
+    },
+    "saving_throws": {
+    },
+    "actions": {
+      "bite": {
+        "range": "melee",
+        "to_hit": "+4",
+        "damage": [
+          {
+            "damage_dice": "1d6+2",
+            "damage_type": "piercing"
+          }
+        ]
+      },
+      "club": {
+        "range": "melee",
+        "to_hit": "+4",
+        "damage": [
+          {
+            "damage_dice": "1d6+2",
+            "damage_type": "bludgeoning"
+          }
+        ]
+      },
+      "javelin": {
+        "range": "melee or ranged",
+        "to_hit": "+4",
+        "damage": [
+          {
+            "damage_dice": "1d6+2",
+            "damage_type": "piercing"
+          }
+        ]
+      },
+      "shield": {
+        "range": "melee",
+        "to_hit": "+4",
+        "damage": [
+          {
+            "damage_dice": "1d6+2",
+            "damage_type": "piercing"
+          }
+        ]
+      }
+    }
+  },
+  "lesser_medusa": {
+    "commands": ["medusalesser", "lessermedusa", "lmedusa"],
+    "name": "Lesser Medusa",
+    "max_hit_points": "63",
+    "max_hit_points_average": 63,
+    "armor_class": 15,
+    "ability_scores": {
+      "STR": 10,
+      "DEX": 15,
+      "CON": 16,
+      "INT": 12,
+      "WIS": 13,
+      "CHA": 15
+    },
+    "saving_throws": {
+    },
+    "actions": {
+      "hair": {
+        "range": "melee",
+        "to_hit": "+5",
+        "damage": [
+          {
+            "damage_dice": "1d4+2",
+            "damage_type": "piercing"
+          },
+          {
+            "damage_dice": "2d6",
+            "damage_type": "poison"
+          }
+        ]
+      },
+      "claw": {
+        "range": "melee",
+        "to_hit": "+5",
+        "damage": [
+          {
+            "damage_dice": "1d6+2",
+            "damage_type": "slashing"
+          }
+        ]
+      },
+      "longbow": {
+        "range": "150/600",
+        "to_hit": "+5",
+        "damage": [
+          {
+            "damage_dice": "1d8+2",
+            "damage_type": "piercing"
+          },
+          {
+            "damage_dice": "2d6",
+            "damage_type": "poison"
+          }
         ]
       }
     }
