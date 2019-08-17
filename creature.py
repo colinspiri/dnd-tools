@@ -27,13 +27,13 @@ class Creature(Entity):
 
         self.actions = actions
 
-    def make_save(self, ability, save_dc):
+    def make_save(self, ability, save_dc, advantage):
         save_bonus = self.saving_throws[ability]
         if save_dc is not None:
             print("Save Bonus: " + dice.stringify_modifier(save_bonus))
-            dice.show_save(str(save_bonus), save_dc)
+            dice.show_save(str(save_bonus), save_dc, advantage = advantage)
         else:
-            dice.show_roll(str(save_bonus))
+            dice.show_roll(str(save_bonus), advantage = advantage)
 
     def set_actions(self, actions):
         self.actions = actions
@@ -86,9 +86,8 @@ class Creature(Entity):
                 return
             # If more damage in array, show bonus damage
             for i in range(1, len(damages)):
-                damage_tuple = dice.roll(damages[i]["damage_dice"])
-                damage_result = damage_tuple[2]
-                print("Bonus Damage: " + str(damage_result) + " (" + damages[i]["damage_type"] + ")")
+                damage_rolls, _, damage_result = dice.roll(damages[i]["damage_dice"])
+                print("Bonus Damage: " + str(damage_rolls) + "; " + str(damage_result) + " (" + damages[i]["damage_type"] + ")")
         # Show effects
         try:
             for i in range(len(action["effects"])):

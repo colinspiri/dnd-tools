@@ -132,9 +132,9 @@ class PC(Creature):
             self.current_hit_points = 0
         self.json_object["current_hit_points"] = self.current_hit_points
 
-    def skill_check(self, skill):
+    def skill_check(self, skill, advantage=0):
         skill_bonus = self.skills[skill]
-        dice.show_roll(str(skill_bonus))
+        dice.show_roll(str(skill_bonus), advantage)
 
     def take_short_rest(self):
         # Expend hit dice

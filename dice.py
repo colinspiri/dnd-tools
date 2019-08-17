@@ -68,37 +68,42 @@ def roll(text):
         return [die_result], modifier, result
     else:
         print("Cannot regonize input format. Please try again.")
-def show_roll(text):
-    rolls, modifier, result = roll(text)
-
-    if modifier < 0:
-        print(str(rolls) + " (-" + str(abs(modifier)) + ")")
-    else:
-        print(str(rolls) + " (+" + str(modifier) + ")")
-    print("Result: " + str(result))
-    return rolls, modifier, result
-
-def show_attack(to_hit_modifier, damage_dice, damage_type = "", advantage = 0):
+def show_advantage_roll(advantage):
     # Input validation
     if not (advantage == 0 or advantage == 1 or advantage == -1):
         raise Exception("Advantage variable must be either 0 (nothing), 1 (advantage), or -1 (disadvantage).")
 
-    # Advantage and to hit result
-    if advantage == 0:
+    rolls1 = [random_int(20)]
+    roll1 = sum(rolls1)
+    rolls2 = [random_int(20)]
+    roll2 = sum(rolls2)
+    rolls = rolls1 + rolls2
+    if advantage == 1:
+        result = roll1 if (roll1 > roll2) else roll2
+        print("Rolled with advantage: " + str(rolls))
+    elif advantage == -1:
+        result = roll1 if (roll1 < roll2) else roll2
+        print("Rolled with disadvantage: " + str(rolls))
+    return result
+def show_roll(text, advantage = 0):
+    rolls, modifier, result = roll(text)
+
+    if advantage is not 0:
+        pre_modifier_result = show_advantage_roll(advantage)
+        result = pre_modifier_result + modifier
+        rolls = [pre_modifier_result]
+
+    print(str(rolls) + " (" + stringify_modifier(modifier) + ")")
+    print("Result: " + str(result))
+    return rolls, modifier, result
+
+def show_attack(to_hit_modifier, damage_dice, damage_type = "", advantage = 0):
+    # To hit result
+    if advantage is 0:
         rolls, _, to_hit_result = roll(str(to_hit_modifier))
         to_hit_roll = sum(rolls)
     else:
-        rolls1 = roll("d20")[0]
-        roll1 = sum(rolls1)
-        rolls2 = roll("d20")[0]
-        roll2 = sum(rolls2)
-        all_rolls = rolls1 + rolls2
-        if advantage == 1:
-            to_hit_roll = roll1 if (roll1 > roll2) else roll2
-            print("Rolled with advantage: " + str(all_rolls))
-        elif advantage == -1:
-            to_hit_roll = roll1 if (roll1 < roll2) else roll2
-            print("Rolled with disadvantage: " + str(all_rolls))
+        to_hit_roll = show_advantage_roll(advantage)
         to_hit_result = to_hit_roll + to_hit_modifier
     print("To Hit: " + str(to_hit_result))
 
@@ -112,6 +117,8 @@ def show_attack(to_hit_modifier, damage_dice, damage_type = "", advantage = 0):
     else:
         # Damage
         damage_rolls, _, damage_result = roll(damage_dice)
+        damage_text = "Damage: "
+
         # Critical hit and extra damage
         if to_hit_roll == 20:
             if "+" in damage_dice:
@@ -123,16 +130,16 @@ def show_attack(to_hit_modifier, damage_dice, damage_type = "", advantage = 0):
             crit_rolls, _, crit_result = roll(crit_dice)
             damage_result += crit_result
             print("CRITICAL HIT! INFLICTED EXTRA " + crit_dice + " DAMAGE.")
-            print("Damage Rolls: " + str(damage_rolls) + " " + str(crit_rolls))
+            damage_text += str(damage_rolls) + " " + str(crit_rolls)
         else:
-            print("Damage Rolls: " + str(damage_rolls))
+            damage_text += str(damage_rolls)
         if damage_result < 0:
             damage_result = 0
         # Print damage and damage type
-        if damage_type == "":
-            print("Damage: " + str(damage_result))
-        else:
-            print("Damage: " + str(damage_result) + " (" + damage_type + ")")
+        damage_text += "; " + str(damage_result)
+        if not damage_type == "":
+            damage_text += " (" + damage_type + ")"
+        print(damage_text)
 
     if to_hit_roll == 20:
         critical = True
@@ -142,26 +149,12 @@ def show_attack(to_hit_modifier, damage_dice, damage_type = "", advantage = 0):
         critical = None
     return critical
 def show_save(save_bonus, save_dc, advantage = 0):
-    # Input validation
-    if not (advantage == 0 or advantage == 1 or advantage == -1):
-        raise Exception("Advantage variable must be either 0 (nothing), 1 (advantage), or -1 (disadvantage).")
-
-    # Advantage and to hit result
-    if advantage == 0:
-        die_results, _, save_result = roll(str(save_bonus))
+    # To hit result
+    if advantage is 0:
+        _, _, save_result = roll(str(save_bonus))
     else:
-        rolls1 = roll("d20")[0]
-        roll1 = sum(rolls1)
-        rolls2 = roll("d20")[0]
-        roll2 = sum(rolls2)
-        all_rolls = rolls1 + rolls2
-        if advantage == 1:
-            roll_taken = roll1 if (roll1 > roll2) else roll2
-            print("Rolled with advantage: " + str(all_rolls))
-        elif advantage == -1:
-            roll_taken = roll1 if (roll1 < roll2) else roll2
-            print("Rolled with disadvantage: " + str(all_rolls))
-        save_result = roll_taken + save_bonus
+        save_roll = show_advantage_roll(advantage)
+        save_result = save_roll + save_bonus
 
     # Print result
     if save_result >= int(save_dc):
@@ -170,7 +163,4 @@ def show_save(save_bonus, save_dc, advantage = 0):
         print("FAILURE: " + str(save_result))
 
 if __name__ == "__main__":
-    while True:
-        print()
-        text = input("> ")
-        show_roll(text)
+    show_save(1, 13, advantage=0)

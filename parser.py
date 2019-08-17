@@ -60,11 +60,11 @@ def command_roll(components):
         return
     # Parse for advantage
     advantage = 0
-    if len(components) >= 4:
-        if components[3] == "adv" or components[3] == "advantage":
-            advantage = 1
-        elif components[3] == "dis" or components[3] == "disadvantage":
-            advantage = -1
+    last_component = components[len(components)-1]
+    if last_component == "adv" or last_component == "advantage":
+        advantage = 1
+    elif last_component == "dis" or last_component == "disadvantage":
+        advantage = -1
     # Roll attack
     if components[0] == "attack":
         dice.show_attack(int(components[1]), components[2], advantage = advantage)
@@ -73,7 +73,7 @@ def command_roll(components):
         dice.show_save(int(components[1]), components[2], advantage = advantage)
     # Roll standard dice
     else:
-        dice.show_roll("".join(components))
+        dice.show_roll(components[0], advantage=advantage)
 def command_damage(initiative, components):
     if len(components) == 0:
         print("Invalid input. Damage command requires more parameters.")
@@ -124,16 +124,22 @@ def command_save(initiative, components):
         print("Invalid input. Save command requires more parameters.")
         return
     entity = initiative.get_current_entity()
+    save_dc = None
+    advantage = 0
+    if len(components) == 3:
+        if components[2] == "adv" or components[2] == "advantage":
+            advantage = 1
+        elif components[2] == "dis" or components[2] == "disadvantage":
+            advantage = -1
     if not hasattr(entity, "saving_throws"):
         print(entity.name + " cannot roll a saving throw. Did you want a d20 roll?")
-        dice.show_roll("d20")
+        dice.show_roll("d20", advantage)
         return
-    ability = components[0].upper()
-    save_dc = None
-    if len(components) == 2:
+    if len(components) >= 2:
         save_dc = components[1]
+    ability = components[0].upper()
     try:
-        entity.make_save(ability, save_dc)
+        entity.make_save(ability, save_dc, advantage = advantage)
     except:
         if save_dc is None:
             print(entity.name + " has no saving throw named \'" + ability + "\'.")
@@ -144,13 +150,23 @@ def command_check(initiative, components):
         print("Invalid input. Check command requires more parameters.")
         return
     entity = initiative.get_current_entity()
+    # Get advantage
+    advantage = 0
+    last_component = components.pop(len(components) - 1)
+    if last_component == "adv":
+        advantage = 1
+    elif last_component == "dis":
+        advantage = -1
+    else:
+        components.append(last_component)
+    # Get skill
     if not hasattr(entity, "skills"):
         print(entity.name + " cannot roll a skill check. Did you want a d20 roll?")
-        dice.show_roll("d20")
+        dice.show_roll("d20", advantage)
         return
     skill = "_".join(components).lower()
     try:
-        entity.skill_check(skill)
+        entity.skill_check(skill, advantage)
     except:
         print(entity.name + " has no skill or ability named \'" + skill + "\'.")
 def command_rest(initiative, components):
