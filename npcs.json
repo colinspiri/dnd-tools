@@ -27,6 +27,74 @@
       }
     }
   },
+  "rust_monster": {
+    "commands": ["rustm", "rust", "rust_monster"],
+    "name": "Rust Monster",
+    "max_hit_points": "5d8+5",
+    "max_hit_points_average": 27,
+    "armor_class": 14,
+    "ability_scores": {
+      "STR": 13,
+      "DEX": 12,
+      "CON": 13,
+      "INT": 2,
+      "WIS": 13,
+      "CHA": 6
+    },
+    "saving_throws": {
+    },
+    "actions": {
+      "bite": {
+        "range": "melee",
+        "to_hit": "+3",
+        "damage": [
+          {
+            "damage_dice": "1d8+1",
+            "damage_type": "piercing"
+          }
+        ]
+      }
+    }
+  },
+  "gelatinous_cube": {
+    "commands": ["gelc", "gelcube", "cube"],
+    "name": "Gelatinous Cube",
+    "max_hit_points": "8d10+40",
+    "max_hit_points_average": 84,
+    "armor_class": 6,
+    "ability_scores": {
+      "STR": 14,
+      "DEX": 3,
+      "CON": 20,
+      "INT": 1,
+      "WIS": 6,
+      "CHA": 1
+    },
+    "saving_throws": {
+    },
+    "actions": {
+      "hit": {
+        "range": "melee",
+        "to_hit": "+4",
+        "damage": [
+          {
+            "damage_dice": "3d6",
+            "damage_type": "acid"
+          }
+        ]
+      },
+      "digest": {
+        "range": "melee",
+        "to_hit": "+4",
+        "damage": [
+          {
+            "damage_dice": "6d6",
+            "damage_type": "acid"
+          }
+        ]
+      }
+    }
+  },
   "wolf": {
     "name": "Wolf",
     "max_hit_points": "2d8+2",
