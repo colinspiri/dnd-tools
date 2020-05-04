@@ -1,5 +1,5 @@
 from creature import Creature
-import constants
+import data.constants as constants
 import dice
 import jsonloader as loader
 import math

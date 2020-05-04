@@ -3,19 +3,19 @@ import json
 
 def update_pcs(pcs):
     data = None
-    with open("pcs.json", "r") as file:
+    with open("data/pcs.json", "r") as file:
         data = json.load(file)
         for json_pc_key, json_pc in data.items():
             for pc in pcs:
                 if json_pc["name"] == pc.name:
                     data[json_pc_key] = pc.json_object
                     print("Stored all data for " + pc.name + " in JSON.")
-    with open("pcs.json", "w") as file:
+    with open("data/pcs.json", "w") as file:
         json.dump(data, file, indent=2)
 
 
 def get_class_features(requested_class, max_level):
-    with open("classes.json", "r") as file:
+    with open("data/classes.json", "r") as file:
         data = json.load(file)
         features = {}
         for i in range(max_level):
@@ -25,7 +25,7 @@ def get_class_features(requested_class, max_level):
 
 
 def get_npc(requested_npc):
-    with open("npcs.json", "r") as file:
+    with open("data/npcs.json", "r") as file:
         data = json.load(file)
         for npc_name, npc in data.items():
             if npc_name == requested_npc:
@@ -47,15 +47,15 @@ def get_json_object(requested_json_object, file_name):
 
 
 def get_pc(requested_pc):
-    return get_json_object(requested_pc, "pcs.json")
+    return get_json_object(requested_pc, "data/pcs.json")
 
 
 def get_weapon(requested_weapon):
-    return get_json_object(requested_weapon, "weapons.json")
+    return get_json_object(requested_weapon, "data/weapons.json")
 
 
 def get_command_names():
-    with open("commands.json", "r") as file:
+    with open("data/commands.json", "r") as file:
         data = json.load(file)
         command_names = []
         for command_name in data:
@@ -64,7 +64,7 @@ def get_command_names():
 
 
 def get_command_description(requested_command):
-    return get_json_object(requested_command, "commands.json")
+    return get_json_object(requested_command, "data/commands.json")
 
 
 def get_simple_action_dictionary(name, range, to_hit, damage_dice, damage_type):

@@ -1,5 +1,5 @@
 from entity import Entity
-import constants
+import data.constants as constants
 import dice
 
 

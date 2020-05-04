@@ -5,3 +5,4 @@ TODO
 -command to kill a monster
 -indicate when monster is bloodied
 -convert player names into character names when rolling init
+-new class for representation of pc for combat 
