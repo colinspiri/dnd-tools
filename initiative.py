@@ -97,8 +97,17 @@ class Initiative:
         for element in self.order:
             print(element["entity"].name + " (" + str(element["score"]) + ")")
 
-    def command_next(self):
-        return
+    def end_initiative(self):
+        pcs_to_update = []
+        for set in self.order:
+            if hasattr(set["entity"], "json_object"):
+                pcs_to_update.append(set["entity"])
+        if len(pcs_to_update) > 0:
+            text = input("Save player character data? ").strip()
+            if text == "yes" or text == "y":
+                loader.update_pcs(pcs_to_update)
+        print("Program ended.")
+        quit()
 
 
 def input_initiative():

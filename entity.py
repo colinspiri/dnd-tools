@@ -11,6 +11,7 @@ class Entity:
             self.current_hit_points -= damage
             if self.current_hit_points <= 0:
                 print(self.name + " has dropped to " + str(self.current_hit_points) + " hit points. Use the 'remove' command to consider them dead.")
+
     def heal(self, damage):
         self.damage_taken -= damage
         if hasattr(self, "current_hit_points"):

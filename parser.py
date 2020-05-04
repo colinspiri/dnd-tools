@@ -19,19 +19,19 @@ def process_input(initiative, text):
 
 
 def run_command(initiative, command, components):
-    if command == "next":
+    if command == "next" or command == "n":
         initiative.next_turn()
-    elif command == "end":
-        command_end(initiative)
-    elif command == "roll":
+    elif command == "e" or command == "end" or command == "q" or command == "quit":
+        initiative.end_initiative()
+    elif command == "r" or command == "roll":
         command_roll(components)
-    elif command == "damage":
+    elif command == "d" or command == "damage":
         command_damage(initiative, components)
-    elif command == "heal":
+    elif command == "h" or command == "heal":
         command_heal(initiative, components)
-    elif command == "remove":
+    elif command == "rm" or command == "rem" or command == "remove":
         command_remove(initiative, components)
-    elif command == "action":
+    elif command == "a" or command == "action":
         command_action(initiative, components)
     elif command == "save":
         command_save(initiative, components)
@@ -42,32 +42,20 @@ def run_command(initiative, command, components):
     elif command == "help":
         command_help(components)
     else:
-        print("Command not recognized. Type \'help\' for a list of available commands.")
-
-
-def command_end(initiative):
-    pcs_to_update = []
-    for set in initiative.order:
-        if hasattr(set["entity"], "json_object"):
-            pcs_to_update.append(set["entity"])
-    if len(pcs_to_update) > 0:
-        text = input("Save player character data? ").strip()
-        if text == "yes" or text == "y":
-            loader.update_pcs(pcs_to_update)
-    print("Program ended.")
-    quit()
+        print("Command not recognized. Available commands:")
+        command_help([])
 
 
 def command_roll(components):
     if len(components) == 0:
-        print("Invalid input. Roll command requires more parameters.")
+        dice.show_roll("d20", advantage=0)
         return
     # Parse for advantage
     advantage = 0
     last_component = components[len(components)-1]
-    if last_component == "adv" or last_component == "advantage":
+    if last_component == "a" or last_component == "adv" or last_component == "advantage":
         advantage = 1
-    elif last_component == "dis" or last_component == "disadvantage":
+    elif last_component == "d" or last_component == "dis" or last_component == "disadvantage":
         advantage = -1
     # Roll attack
     if components[0] == "attack":
@@ -80,57 +68,44 @@ def command_roll(components):
         dice.show_roll(components[0], advantage=advantage)
 
 
-def command_damage(initiative, components):
+def command_damage(initiative, components, heal=False):
     if len(components) == 0:
         print("Invalid input. Damage command requires more parameters.")
         return
     elif len(components) == 1:
-        damage_amount = components[0]
-        if not damage_amount.isdigit():
-            _, _, damage_amount = dice.show_roll(damage_amount)
-        initiative.damage_current_entity(int(damage_amount))
+        entity = initiative.get_current_entity()
+        amount = components[0]
     else:
-        name = components[0]
-        damage_amount = components[1]
-        if not damage_amount.isdigit():
-            _, _, damage_amount = dice.show_roll(damage_amount)
-        initiative.damage_entity(initiative.get_entity(name), int(damage_amount))
-        print(initiative.get_entity(name))
+        entity = initiative.get_entity(components[0])
+        amount = components[1]
+    if not amount.isdigit():
+        _, _, amount = dice.show_roll(amount)
+    initiative.damage_entity(entity, -int(amount) if heal else int(amount))
+    print(entity)
 
 
 def command_heal(initiative, components):
-    if len(components) == 0:
-        print("Invalid input. Heal command requires more parameters.")
-        return
-    elif len(components) == 1:
-        heal_amount = components[0]
-        if not heal_amount.isdigit():
-            _, _, heal_amount = dice.show_roll(heal_amount)
-        initiative.damage_current_entity(-1*int(heal_amount))
-    else:
-        name = components[0]
-        heal_amount = components[1]
-        if not heal_amount.isdigit():
-            _, _, heal_amount = dice.show_roll(heal_amount)
-        initiative.damage_entity(initiative.get_entity(name), -1*int(heal_amount))
+    command_damage(initiative, components, True)
 
 
 def command_remove(initiative, components):
     if len(components) == 0:
         initiative.get_current_entity().dead = True
-    # Remove INDEX
+    # Remove by index
     else:
         initiative.order[int(components[0])]["creature"].dead = True
     initiative.remove_dead_entities()
 
 
 def command_action(initiative, components):
-    creature = initiative.get_current_entity()
+    entity = initiative.get_current_entity()
     if len(components) == 0:
-        creature.show_actions()
+        entity.show_actions()
     # Action ACTION_NAME
     else:
-        creature.action(components[0])
+        entity.action(components[0])
+
+
 def command_save(initiative, components):
     if len(components) == 0:
         print("Invalid input. Save command requires more parameters.")
@@ -151,12 +126,14 @@ def command_save(initiative, components):
         save_dc = components[1]
     ability = components[0].upper()
     try:
-        entity.make_save(ability, save_dc, advantage = advantage)
-    except:
+        entity.make_save(ability, save_dc, advantage=advantage)
+    except Exception:
         if save_dc is None:
             print(entity.name + " has no saving throw named \'" + ability + "\'.")
         else:
             print("\'" + ability + "\' and \'" + save_dc + "\' not recognized as valid input for ABILITY and SAVE DC.")
+
+
 def command_check(initiative, components):
     if len(components) == 0:
         print("Invalid input. Check command requires more parameters.")
@@ -179,8 +156,10 @@ def command_check(initiative, components):
     skill = "_".join(components).lower()
     try:
         entity.skill_check(skill, advantage)
-    except:
+    except Exception:
         print(entity.name + " has no skill or ability named \'" + skill + "\'.")
+
+
 def command_rest(initiative, components):
     if len(components) == 0:
         print("Invalid input. Rest command requires more parameters.")
@@ -199,6 +178,8 @@ def command_rest(initiative, components):
         entity.take_long_rest()
     else:
         print("\'" + components[0] + "\' not recognized as a valid rest type. Choose either \'short\' or \'long\'.")
+
+
 def command_help(components):
     if len(components) == 0:
         commands = loader.get_command_names()
