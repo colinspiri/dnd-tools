@@ -1,14 +1,17 @@
 import random
 
+
 def stringify_modifier(modifier):
     if modifier < 0:
         return str(modifier)
     else:
         return "+" + str(modifier)
 
+
 def random_int(die_type):
     result = random.randint(1, die_type)
     return result
+
 
 def roll(text):
     # Rolling specified dice
@@ -68,6 +71,8 @@ def roll(text):
         return [die_result], modifier, result
     else:
         print("Cannot regonize input format. Please try again.")
+
+
 def show_advantage_roll(advantage):
     # Input validation
     if not (advantage == 0 or advantage == 1 or advantage == -1):
@@ -85,7 +90,9 @@ def show_advantage_roll(advantage):
         result = roll1 if (roll1 < roll2) else roll2
         print("Rolled with disadvantage: " + str(rolls))
     return result
-def show_roll(text, advantage = 0):
+
+
+def show_roll(text, advantage=0):
     rolls, modifier, result = roll(text)
 
     if advantage is not 0:
@@ -97,9 +104,10 @@ def show_roll(text, advantage = 0):
     print("Result: " + str(result))
     return rolls, modifier, result
 
-def show_attack(to_hit_modifier, damage_dice, damage_type = "", advantage = 0):
+
+def show_attack(to_hit_modifier, damage_dice, damage_type="", advantage=0):
     # To hit result
-    if advantage is 0:
+    if advantage == 0:
         rolls, _, to_hit_result = roll(str(to_hit_modifier))
         to_hit_roll = sum(rolls)
     else:
@@ -111,7 +119,7 @@ def show_attack(to_hit_modifier, damage_dice, damage_type = "", advantage = 0):
     if to_hit_roll == 1:
         print("CRITICAL FAILURE! MISSED ENTIRELY.")
         damage_result = 0
-    elif damage_dice == None:
+    elif damage_dice is None:
         if to_hit_roll == 20:
             print("CRITICAL HIT!")
     else:
@@ -148,9 +156,11 @@ def show_attack(to_hit_modifier, damage_dice, damage_type = "", advantage = 0):
     else:
         critical = None
     return critical
-def show_save(save_bonus, save_dc, advantage = 0):
+
+
+def show_save(save_bonus, save_dc, advantage=0):
     # To hit result
-    if advantage is 0:
+    if advantage == 0:
         _, _, save_result = roll(str(save_bonus))
     else:
         save_roll = show_advantage_roll(advantage)
@@ -161,6 +171,7 @@ def show_save(save_bonus, save_dc, advantage = 0):
         print("SUCCESS: " + str(save_result))
     else:
         print("FAILURE: " + str(save_result))
+
 
 if __name__ == "__main__":
     show_save(1, 13, advantage=0)

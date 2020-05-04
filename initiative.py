@@ -3,20 +3,23 @@ from npc import NPC
 import jsonloader as loader
 import dice
 
+
 class Initiative:
     def __init__(self):
         self.order = []
         self.turn = 0
         self.round = 0
 
-    def add_entity(self, entity, initiative):
+    def add_entity(self, entity, score):
         self.order.append({
-        "entity": entity,
-        "initiative": initiative
+            "entity": entity,
+            "score": score
         })
         self.sort()
+
     def get_current_entity(self):
         return self.order[self.turn]["entity"]
+
     def get_entity(self, name):
         for set in self.order:
             entity = set["entity"]
@@ -27,7 +30,7 @@ class Initiative:
                     for command in entity.commands:
                         if name.lower() == command.lower():
                             return entity
-                except:
+                except Exception:
                     pass
 
     def damage_current_entity(self, damage_amount):
@@ -60,14 +63,15 @@ class Initiative:
             self.next_round()
 
     def sort(self):
-        def get_entity_initiative(entity):
-            return entity["initiative"]
-        self.order.sort(key = get_entity_initiative, reverse = True)
+        def get_entity_score(entity):
+            return entity["score"]
+        self.order.sort(key=get_entity_score, reverse=True)
 
     def next_turn(self):
         self.turn += 1
         if self.turn >= len(self.order):
             self.next_round()
+
     def next_round(self):
         self.turn = 0
         self.round += 1
@@ -75,74 +79,79 @@ class Initiative:
 
     def show_turn(self):
         entity = self.get_current_entity()
-        print(entity.name + " (" + str(self.order[self.turn]["initiative"]) + ") is up." )
+        print(entity.name + " (" + str(self.order[self.turn]["score"]) + ") is up.")
         if entity.damage_taken > 0:
             print(str(entity.damage_taken) + " damage taken.")
         try:
-            print("Hit Points: " + str(entity.current_hit_points) + "/" + str(entity.max_hit_points))
-        except:
+            print("Max HP: " + str(entity.max_hit_points))
+        except Exception:
             pass
+
     def show_round(self):
         print("\n\n")
         print("ROUND " + str(self.round + 1) + ":")
+
     def show_order(self):
         print()
         print("Initiative Order: ")
         for element in self.order:
-            print(element["entity"].name + " (" + str(element["initiative"]) + ")")
+            print(element["entity"].name + " (" + str(element["score"]) + ")")
+
+    def command_next(self):
+        return
 
 
 def input_initiative():
-    initiative = Initiative()
-    print("Enter initiative in form \"[Count] Name [Initiative]\".")
+    print("Enter initiative in form \"<count> name <initiative score>\".")
+    init = Initiative()
     while True:
-        # Get input
+        # Get input as list of words
         text = input("> ").strip()
         if text == "":
             break
         words = text.split()
+        # Initialize parameters to pass to add_to_initiative()
+        count = 1
+        name_index = 0
         if words[0].isdigit():
-            count_specified = True
-            entity_count = int(words[0])
-            name = words[1].lower()
-        else:
-            count_specified = False
-            name = words[0].lower()
-            entity_count = 1
-
-        # If creature name is found in JSON, use it; otherwise, make an Entity object
+            name_index = 1
+            count = int(words[0])
+        name = words[name_index].lower()
         try:
-            new_entity = NPC(loader.get_npc(name))
-            print("Got " + new_entity.name + " stats from JSON.")
-        except:
-            new_entity = Entity(name.capitalize())
+            score = int(words[name_index + 1])
+        except Exception:
+            score = False
+        add_to_initiative(init, count, name, score)
+    return init
 
-        # Get the initiative roll
+
+def add_to_initiative(init, count, name, score):
+    # Add a number of entities equal to count
+    for i in range(count):
+        # Use JSON stats if found, otherwise just make blank Entity
         try:
-            if count_specified:
-                initiative_result = int(words[2])
-            else:
-                initiative_result = int(words[1])
-        except:
-            initiative_result = dice.random_int(20)
+            entity = NPC(loader.get_npc(name))
+            print("Loaded " + entity.name + " stats.")
+            # Append numbers to all commands if multiple
+            if count > 1:
+                for c in range(len(entity.commands)):
+                    entity.commands[c] += str(i + 1)
+        except Exception:
+            entity = Entity(name.capitalize())
+
+        # Append numbers to name if multiple
+        if count > 1:
+            entity.name += str(i + 1)
+
+        # Roll for initiative if none given
+        if score is False:
+            init_score = dice.random_int(20)
+            # Add DEX if the entity has it
             try:
-                initiative_result += new_entity.ability_modifiers["DEX"]
-            except:
+                init_score += entity.ability_modifiers["DEX"]
+            except Exception:
                 pass
-            print("Rolled " + str(initiative_result) + " for initiative.")
-
-        # If count is nonzero
-        if words[0].isdigit():
-            for i in range(entity_count):
-                try:
-                    new_entity_instance = NPC(loader.get_npc(name))
-                    for c in range(len(new_entity_instance.commands)):
-                        new_entity_instance.commands[c] += str(i + 1)
-                except:
-                    new_entity_instance = Entity(name.capitalize())
-                new_entity_instance.name += str(i + 1)
-                initiative.add_entity(new_entity_instance, initiative_result)
-        # Otherwise, just add it to the order
+            print("Rolled " + str(init_score) + " for initiative.")
         else:
-            initiative.add_entity(new_entity, initiative_result)
-    return initiative
+            init_score = score
+        init.add_entity(entity, init_score)

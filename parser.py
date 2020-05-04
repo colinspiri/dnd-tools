@@ -1,6 +1,7 @@
-import initiative as init
+# import initiative as init
 import dice
 import jsonloader as loader
+
 
 def get_input(initiative):
     text = input("> ").strip()
@@ -9,15 +10,17 @@ def get_input(initiative):
     else:
         process_input(initiative, text)
 
+
 def process_input(initiative, text):
     text_elements = text.strip().split()
     command = text_elements[0]
     text_elements.remove(command)
     run_command(initiative, command, text_elements)
 
+
 def run_command(initiative, command, components):
     if command == "next":
-        command_next(initiative)
+        initiative.next_turn()
     elif command == "end":
         command_end(initiative)
     elif command == "roll":
@@ -41,8 +44,7 @@ def run_command(initiative, command, components):
     else:
         print("Command not recognized. Type \'help\' for a list of available commands.")
 
-def command_next(initiative):
-    initiative.next_turn()
+
 def command_end(initiative):
     pcs_to_update = []
     for set in initiative.order:
@@ -54,6 +56,8 @@ def command_end(initiative):
             loader.update_pcs(pcs_to_update)
     print("Program ended.")
     quit()
+
+
 def command_roll(components):
     if len(components) == 0:
         print("Invalid input. Roll command requires more parameters.")
@@ -67,13 +71,15 @@ def command_roll(components):
         advantage = -1
     # Roll attack
     if components[0] == "attack":
-        dice.show_attack(int(components[1]), components[2], advantage = advantage)
+        dice.show_attack(int(components[1]), components[2], advantage=advantage)
     # Roll save
     elif components[0] == "save":
-        dice.show_save(int(components[1]), components[2], advantage = advantage)
+        dice.show_save(int(components[1]), components[2], advantage=advantage)
     # Roll standard dice
     else:
         dice.show_roll(components[0], advantage=advantage)
+
+
 def command_damage(initiative, components):
     if len(components) == 0:
         print("Invalid input. Damage command requires more parameters.")
@@ -90,6 +96,8 @@ def command_damage(initiative, components):
             _, _, damage_amount = dice.show_roll(damage_amount)
         initiative.damage_entity(initiative.get_entity(name), int(damage_amount))
         print(initiative.get_entity(name))
+
+
 def command_heal(initiative, components):
     if len(components) == 0:
         print("Invalid input. Heal command requires more parameters.")
@@ -105,6 +113,8 @@ def command_heal(initiative, components):
         if not heal_amount.isdigit():
             _, _, heal_amount = dice.show_roll(heal_amount)
         initiative.damage_entity(initiative.get_entity(name), -1*int(heal_amount))
+
+
 def command_remove(initiative, components):
     if len(components) == 0:
         initiative.get_current_entity().dead = True
@@ -112,6 +122,8 @@ def command_remove(initiative, components):
     else:
         initiative.order[int(components[0])]["creature"].dead = True
     initiative.remove_dead_entities()
+
+
 def command_action(initiative, components):
     creature = initiative.get_current_entity()
     if len(components) == 0:
