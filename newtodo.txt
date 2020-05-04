@@ -4,5 +4,4 @@ TODO
 -damage counts up to hit point maximum, not down
 -command to kill a monster
 -indicate when monster is bloodied
--"r" for roll
 -convert player names into character names when rolling init

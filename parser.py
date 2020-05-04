@@ -93,7 +93,7 @@ def command_remove(initiative, components):
         initiative.get_current_entity().dead = True
     # Remove by index
     else:
-        initiative.order[int(components[0])]["creature"].dead = True
+        initiative.order[int(components[0]) + 1]["entity"].dead = True
     initiative.remove_dead_entities()
 
 

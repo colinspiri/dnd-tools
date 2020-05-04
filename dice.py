@@ -95,7 +95,7 @@ def show_advantage_roll(advantage):
 def show_roll(text, advantage=0):
     rolls, modifier, result = roll(text)
 
-    if advantage is not 0:
+    if advantage != 0:
         pre_modifier_result = show_advantage_roll(advantage)
         result = pre_modifier_result + modifier
         rolls = [pre_modifier_result]

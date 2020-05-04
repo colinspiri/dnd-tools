@@ -2,12 +2,13 @@ from entity import Entity
 import constants
 import dice
 
+
 class Creature(Entity):
     def __init__(self, max_hit_points, actions, json_object):
         Entity.__init__(self, json_object["name"])
         try:
             commands = json_object["commands"]
-        except:
+        except Exception:
             commands = []
         self.commands = commands
 
@@ -25,20 +26,22 @@ class Creature(Entity):
         for ability, modifier in json_object["saving_throws"].items():
             self.saving_throws[ability] = modifier
 
-        self.actions = actions
+        self.set_actions(actions)
 
     def make_save(self, ability, save_dc, advantage):
         save_bonus = self.saving_throws[ability]
         if save_dc is not None:
             print("Save Bonus: " + dice.stringify_modifier(save_bonus))
-            dice.show_save(str(save_bonus), save_dc, advantage = advantage)
+            dice.show_save(str(save_bonus), save_dc, advantage=advantage)
         else:
-            dice.show_roll(str(save_bonus), advantage = advantage)
+            dice.show_roll(str(save_bonus), advantage=advantage)
 
     def set_actions(self, actions):
         self.actions = actions
+
     def show_actions(self):
         print(self.name + " has actions " + str(list(self.actions.keys())))
+
     def action(self, requested_action):
         for action_name, action in self.actions.items():
             # Check actual action name
@@ -51,9 +54,10 @@ class Creature(Entity):
                     if command == requested_action:
                         self.execute_action(action)
                         return
-            except:
+            except Exception:
                 pass
         print("Action name not recognized.")
+
     def execute_action(self, action):
         # Get to hit and damage amounts
         to_hit = action["to_hit"]
@@ -61,12 +65,12 @@ class Creature(Entity):
             damages = action["damage"]
             basic_damage_dice = damages[0]["damage_dice"]
             basic_damage_type = damages[0]["damage_type"]
-        except:
+        except Exception:
             damages = None
 
         # Show summary of action
         summary = self.name + " attacks at a range of " + action["range"] + " with " + to_hit + " to hit and deals "
-        if damages == None:
+        if damages is None:
             summary += "no damage."
         else:
             summary += basic_damage_dice + " " + basic_damage_type + " damage"
@@ -75,14 +79,14 @@ class Creature(Entity):
             summary += "."
         print(summary)
 
-        if damages == None:
+        if damages is None:
             dice.show_attack(to_hit, None, None)
         else:
             # Show attack with basic damage
             critical = dice.show_attack(to_hit, basic_damage_dice, basic_damage_type)
 
             # If critical failure, don't show extra damage
-            if critical == False:
+            if critical is False:
                 return
             # If more damage in array, show bonus damage
             for i in range(1, len(damages)):
@@ -92,7 +96,7 @@ class Creature(Entity):
         try:
             for i in range(len(action["effects"])):
                 print("-" + action["effects"][i])
-        except:
+        except Exception:
             pass
         return
 
@@ -101,6 +105,7 @@ class Creature(Entity):
         for action_name in self.actions.keys():
             text += self.str_action_long(action_name)
         return text
+
     def str_action_long(self, action_name):
         action = self.actions[action_name]
         text = action["name"] + ". "
@@ -115,6 +120,7 @@ class Creature(Entity):
             text += " and (" + damages[i]["damage_dice"] + ") " + damages[i]["damage_type"] + " damage"
         text += ".\n"
         return text
+
     def str_action_short(self, action_name):
         action = self.actions[action_name]
         damages = action["damage"]
@@ -123,5 +129,6 @@ class Creature(Entity):
             text += " + (" + damages[i]["damage_dice"] + ") " + damages[i]["damage_type"] + " damage"
         text += "\n"
         return text
+
     def __str__(self):
-        return self.name + " has " + str(self.current_hit_points) + "/" + str(self.max_hit_points) + " hit points."
+        return self.name + " has " + str(self.max_hit_points) + " max hit points."

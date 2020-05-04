@@ -1,7 +1,7 @@
 from creature import Creature
-import constants
 import dice
 import jsonloader as loader
+
 
 class NPC(Creature):
     def __init__(self, json_object):
@@ -10,6 +10,7 @@ class NPC(Creature):
         Creature.__init__(self, max_hit_points, json_object["actions"], json_object)
 
         self.current_hit_points = self.max_hit_points
+
 
 if __name__ == "__main__":
     npc = NPC(loader.get_creature("strahd"))

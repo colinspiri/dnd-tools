@@ -4,6 +4,7 @@ import dice
 import jsonloader as loader
 import math
 
+
 class PC(Creature):
     def __init__(self, json_object):
         Creature.__init__(self, json_object["max_hit_points"], {}, json_object)
@@ -61,7 +62,7 @@ class PC(Creature):
             action_name = weapon
             try:
                 formatted_name = weapon_stats["name"]
-            except:
+            except Exception:
                 formatted_name = weapon.capitalize()
             versatile = False
             if "versatile" in weapon_stats["properties"]:
@@ -82,14 +83,14 @@ class PC(Creature):
                         actions[action_name]["commands"].append(command + " 1")
                 else:
                     actions[action_name]["commands"] = weapon_stats["commands"]
-            except:
+            except Exception:
                 pass
             # If versatile, add another action with alt damage dice and different commands
             if versatile:
                 action_name = weapon + " 2"
                 try:
                     formatted_name = weapon_stats["name"] + ", Two-Handed"
-                except:
+                except Exception:
                     formatted_name = weapon.capitalize() + ", Two-Handed"
                 alternate_damage = weapon_stats["alternate_damage_dice"]
                 if relevant_ability_bonus > 0:
@@ -101,7 +102,7 @@ class PC(Creature):
                     actions[action_name]["commands"] = []
                     for command in weapon_stats["commands"]:
                         actions[action_name]["commands"].append(command + " 2")
-                except:
+                except Exception:
                     pass
             if "thrown" in weapon_stats["properties"]:
                 action_name = weapon + " thrown"
@@ -119,10 +120,12 @@ class PC(Creature):
             print(self.name + " has dropped to 0 hit points and is now unconscious. " + self.name + " will now make death saving throws.")
         else:
             print(self.str_hit_points())
+
     def heal(self, amount):
         self.damage_taken -= amount
         self.change_hit_points(amount)
         print(self.str_hit_points())
+
     def change_hit_points(self, change):
         self.current_hit_points += change
         if self.current_hit_points > self.max_hit_points:
@@ -147,7 +150,7 @@ class PC(Creature):
             # Check if input is an int
             try:
                 requested_amount = int(text)
-            except:
+            except Exception:
                 print("That's not a number.")
                 continue
             # If 0, move on
@@ -174,6 +177,7 @@ class PC(Creature):
                 if not first_feature_printed:
                     print("Here are some such features:")
                 print(feature_name + ": " + feature)
+
     def take_long_rest(self):
         # Restore hit points
         self.current_hit_points = self.max_hit_points
@@ -202,8 +206,10 @@ class PC(Creature):
 
     def str_hit_points(self):
         return self.name + " has " + str(self.current_hit_points) + "/" + str(self.max_hit_points) + " hit points."
+
     def str_hit_dice(self):
         return "Your remaining hit dice is " + str(self.current_hit_dice) + self.hit_die + "."
+
     def str_ability_scores(self):
         text = "Ability Scores: \n"
         for ability, score in self.ability_scores.items():
@@ -213,6 +219,7 @@ class PC(Creature):
             else:
                 text += ability + ": " + str(score) + " (" + str(modifier) + ")\n"
         return text
+
     def str_weapons(self):
         text = "Weapons: "
         for i in range(len(self.weapons)):
@@ -221,6 +228,7 @@ class PC(Creature):
                 text += ", "
         text += "\n"
         return text
+
     def str_features(self):
         text = "Features:\n"
         for feature_name, feature in self.features.items():
@@ -238,6 +246,7 @@ class PC(Creature):
         text += self.str_features()
 
         return text + "\n"
+
 
 if __name__ == "__main__":
     pc = PC(loader.get_pc("igor"))
